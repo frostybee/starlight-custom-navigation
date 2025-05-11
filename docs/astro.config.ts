@@ -2,7 +2,10 @@ import starlight from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
 import starlightCustomNavigation from 'starlight-custom-navigation'
 
+const siteURI = 'https://frostybee.github.io';
 export default defineConfig({
+  site: siteURI,
+  base: "/starlight-custom-navigation",
   integrations: [
     starlight({
       editLink: {
@@ -18,7 +21,7 @@ export default defineConfig({
       social: [
         { href: 'https://github.com/frostybee/starlight-custom-navigation', icon: 'github', label: 'GitHub' },
       ],
-      title: 'starlight-custom-navigation',
+      title: 'Starlight Custom Navigation',
     }),
   ],
 })

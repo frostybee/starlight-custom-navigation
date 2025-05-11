@@ -1,0 +1,227 @@
+---
+const { pagination } = Astro.locals.starlightRoute;
+const { prev, next } = pagination;
+---
+
+<div class="navigation-arrows">
+    {prev && (
+      <a href={prev.href} rel="prev" class="nav-button prev-button" id="prev-page-link">
+        <div class="nav-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5"></path>
+            <path d="m12 19-7-7 7-7"></path>
+          </svg>
+        </div>
+        <div class="nav-button-text">
+          <div class="arrow-direction">{Astro.locals.t('page.previousLink')}</div>
+          <div class="nav-label">{prev.label || 'Previous Page'}</div>
+        </div>
+      </a>
+    )}
+
+    {next && (
+      <a href={next.href} class="nav-button next-button" id="next-page-link">
+        <div class="nav-button-text">
+          <div class="arrow-direction">{Astro.locals.t('page.nextLink')}</div>
+          <div class="nav-label">{next.label || 'Next Page'}</div>
+      </div>
+      <div class="nav-button-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+          <path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </div>
+    </a>
+    )}
+  </div>
+   
+<script>
+  // Add keyboard navigation
+  document.addEventListener('keydown', (event) => {
+    // Navigate with arrow keys
+    if (event.key === 'ArrowLeft') {
+      const prevLink = document.getElementById('prev-page-link');
+      if (prevLink) prevLink.click();
+    } else if (event.key === 'ArrowRight') {
+      const nextLink = document.getElementById('next-page-link');
+      if (nextLink) nextLink.click();
+    }
+  });
+
+  // Show/hide navigation on scroll
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  const navArrows = document.querySelector('.navigation-arrows');
+
+  window.addEventListener('scroll', () => {
+    lastScrollY = window.scrollY;
+
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        // Hide arrows when scrolling down, show when scrolling up
+        if (lastScrollY > 100) {
+          navArrows?.classList.add('nav-hidden');
+        } else {
+          navArrows?.classList.remove('nav-hidden');
+        }
+        ticking = false;
+      });
+
+      ticking = true;
+    }
+  });
+</script>
+
+<style>
+  @layer starlight.core {
+
+  .navigation-arrows {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+  }
+
+  /* Base button styling shared by both buttons */
+  .nav-button {
+    position: fixed;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--sl-color-text);
+    background-color: var(--sl-color-bg-sidebar);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    padding: 1rem 1.25rem;
+    max-width: 300px;
+    border-radius: 5px;
+    z-index: 999;
+    pointer-events: auto;
+    /* Combine transforms for vertical centering and initial offset */
+    transform: translateY(-50%);
+    /* Single transition for all animatable properties */
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+  }
+
+  .nav-button:hover {
+    background-color: var(--sl-color-accent);
+    color: white;
+    opacity: 1;
+  }
+
+  /* Hidden state for buttons */
+  .nav-hidden {
+    opacity: 0;
+    pointer-events: none; /* Prevent interaction when hidden */
+  }
+
+  .nav-hidden:hover {
+    opacity: 0.7;
+  }
+
+  /* Previous button specific styling */
+  .prev-button {
+    left: 1;
+    right: auto;
+    border-radius: 0 5px 5px 0;
+    padding-left: 0.75rem;
+    margin-left: 0.5rem;;
+    /* Add initial offset to base transform */
+    transform: translateY(-50%) translateX(-5px);
+  }
+
+  .prev-button:hover {
+    transform: translateY(-50%) translateX(0); /* Preserve vertical centering */
+  }
+
+  .prev-button .nav-button-icon {
+    margin-right: 0.5rem;
+  }
+
+  /* Next button specific styling */
+  .next-button {
+    right: 0;
+    left: auto;
+    border-radius: 5px 0 0 5px;
+    flex-direction: row-reverse;
+    margin-right: 1rem;
+    padding: 1rem 0.5rem 1rem 1.25rem;
+    /* Add initial offset to base transform */
+    transform: translateY(-50%) translateX(5px);
+  }
+
+  .next-button:hover {
+    transform: translateY(-50%) translateX(0); /* Preserve vertical centering */
+  }
+
+
+  .next-button .nav-button-icon {
+    margin-left: 0.5rem;
+  }
+
+  /* Icon styling */
+  .nav-button-icon {
+    display: flex;
+    padding: 0 0.75rem;
+    align-items: center;
+  }
+
+  /* Text container */
+  .nav-button-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .arrow-direction {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+    margin-bottom: 0.25rem;
+  }
+
+  .nav-label {
+    font-weight: 600;
+    line-height: 1.3;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* For mobile responsiveness */
+  @media (max-width: 768px) {
+    .nav-button {
+      top: 70vh !important;
+      bottom: 30vh !important;
+      transform: none !important;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      justify-content: center;
+      align-items: center;
+      padding: 0 !important;
+    }
+
+    .nav-button-text {
+      display: none; /* Only show icons on mobile */
+    }
+    .prev-button, .next-button {
+      transform: translateX(0);
+    }
+    .nav-button-icon {
+      padding: 0;
+    }
+  }
+
+  /* Hide buttons when printing */
+  @media print {
+    .nav-button {
+      display: none !important;
+    }
+  }
+}
+
+</style>

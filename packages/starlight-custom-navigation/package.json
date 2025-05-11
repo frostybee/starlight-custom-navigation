@@ -6,7 +6,10 @@
   "author": "frostybee",
   "type": "module",
   "exports": {
-    ".": "./index.ts"
+    ".": "./index.ts",
+    "./components/CustomPageNavigation.astro": "./components/CustomPageNavigation.astro",
+    "./overrides/PageFrame.astro": "./overrides/PageFrame.astro",
+    "./package.json": "./package.json"
   },
   "devDependencies": {
     "@astrojs/starlight": "^0.34.3",
