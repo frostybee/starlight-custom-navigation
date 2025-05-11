@@ -1,0 +1,32 @@
+{
+  "name": "starlight-custom-navigation-docs",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Enhance your documentation site with custom page navigation features, including support for keyboard shortcuts.",
+  "author": "frostybee",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.34.3",
+    "astro": "^5.7.12",
+    "sharp": "^0.34.1",
+    "starlight-custom-navigation": "workspace:*"
+  },
+  "engines": {
+    "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
+  },
+  "private": true,
+  "homepage": "https://github.com/frostybee/starlight-custom-navigation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frostybee/starlight-custom-navigation.git",
+    "directory": "docs"
+  },
+  "bugs": "https://github.com/frostybee/starlight-custom-navigation/issues"
+}
