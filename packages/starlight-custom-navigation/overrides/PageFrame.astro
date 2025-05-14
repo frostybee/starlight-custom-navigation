@@ -1,11 +1,11 @@
 ---
-import StarlightPageFrame from "@astrojs/starlight/components/PageFrame.astro";
+import DefaultPageFrame from "@astrojs/starlight/components/PageFrame.astro";
 import CustomPageNavigation from "../components/CustomPageNavigation.astro";
 ---
 
-<StarlightPageFrame>
-<!-- <CustomPageNavigation /> -->
-<slot />
-<slot name="sidebar" slot="sidebar" />
-<slot name="header" slot="header" />
-<StarlightPageFrame/>
+<DefaultPageFrame>
+  <CustomPageNavigation />
+  <slot />
+  <slot name="header" slot="header" />
+  <slot name="sidebar" slot="sidebar" />
+</DefaultPageFrame>

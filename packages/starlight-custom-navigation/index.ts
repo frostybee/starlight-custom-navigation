@@ -24,11 +24,11 @@ export default function starlightCustomNavigationPlugin(): StarlightPlugin {
         }
 
         if (!config.components?.PageFrame) {
-          // updatedConfig.components.PageFrame = 'starlight-custom-navigation/overrides/PageFrame.astro'
+          updatedConfig.components.PageFrame = 'starlight-custom-navigation/overrides/PageFrame.astro'
         }
 
         addIntegration(starlightCustomNavigationIntegration())
-        // updateConfig(updatedConfig)
+        updateConfig(updatedConfig)
       },
     },
   }
