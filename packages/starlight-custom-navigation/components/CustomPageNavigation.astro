@@ -145,9 +145,9 @@ const getButtonIcon = () => {
       window.requestAnimationFrame(() => {
         // Hide arrows when scrolling down, show when scrolling up
         if (lastScrollY > 100) {
-          navArrows?.classList.add('nav-hidden');
+          navControls?.classList.add('nav-hidden');
         } else {
-          navArrows?.classList.remove('nav-hidden');
+          navControls?.classList.remove('nav-hidden');
         }
         ticking = false;
       });

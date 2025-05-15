@@ -28,13 +28,19 @@ export default defineConfig({
           },
           buttonIcon: {
             path: 'm12 19-7-7 7-7'
-          },          
+          },
         })],
       sidebar: [
         {
-          label: 'Start Here',
+          label: 'Getting Started',
           items: [{ slug: 'getting-started' },
-          { slug: 'configuration' },
+          ]
+        },
+        {
+          label: 'Features & Configuration',
+          items: [
+            { slug: 'features' },
+            { slug: 'configuration' },
           ],
         },
       ],

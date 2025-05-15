@@ -1,33 +1,121 @@
 ---
 title: Configuration
-description: Configure the starlight-scroll-to-top plugin.
+description: Configure the starlight-custom-navigation plugin.
 ---
 
+## Configuration Options
 
+The Starlight custom navigation plugin **accepts an object** with the following **options**. You can customize these options to fit your needs. The default values are provided for each option.
 
-## Configuring Scroll to Top 
+### `linkLabels`
+- **Type**: `object`
+- **Default**: `{ show: true, showOnHover: true, buttonRadiusNoLabel: 24 }`
+- **Description**: Controls the appearance and behavior of navigation button labels.
 
-**Refer to** **the** [example](#example-configuration) **below** **for a complete configuration**. 
+#### `linkLabels.show`
+- **Type**: `boolean`
+- **Default**: `true`
+- **Description**: Whether to show labels on navigation buttons.
 
+#### `linkLabels.showOnHover`
+- **Type**: `boolean`
+- **Default**: `true`
+- **Description**: Whether to show labels in tooltips when hovering over buttons.
+
+#### `linkLabels.buttonRadiusNoLabel`
+- **Type**: `number`
+- **Default**: `24`
+- **Description**: Button radius in pixels when labels are hidden.
+
+### `navShortcuts`
+- **Type**: `object`
+- **Default**: `{ previous: { key: 'ArrowLeft', modifier: 'ctrl' }, next: { key: 'ArrowRight', modifier: 'ctrl' } }`
+- **Description**: Configure keyboard shortcuts for page navigation.
+
+#### `navShortcuts.previous`
+- **Type**: `object`
+- **Default**: `{ key: 'ArrowLeft', modifier: 'ctrl' }`
+- **Description**: Configuration for the "previous page" shortcut.
+
+##### `navShortcuts.previous.key`
+- **Type**: `string`
+- **Default**: `'ArrowLeft'`
+- **Description**: The key to use for the "previous page" shortcut.
+
+##### `navShortcuts.previous.modifier`
+- **Type**: `'ctrl' | 'alt' | 'shift' | 'meta'`
+- **Default**: `'ctrl'`
+- **Description**: The modifier key to use with the shortcut.
+
+#### `navShortcuts.next`
+- **Type**: `object`
+- **Default**: `{ key: 'ArrowRight', modifier: 'ctrl' }`
+- **Description**: Configuration for the "next page" shortcut.
+
+##### `navShortcuts.next.key`
+- **Type**: `string`
+- **Default**: `'ArrowRight'`
+- **Description**: The key to use for the "next page" shortcut.
+
+##### `navShortcuts.next.modifier`
+- **Type**: `'ctrl' | 'alt' | 'shift' | 'meta'`
+- **Default**: `'ctrl'`
+- **Description**: The modifier key to use with the shortcut.
+
+### `buttonIcon`
+- **Type**: `object`
+- **Default**: `{ path: 'M4 16L12 8L20 16' }`
+- **Description**: Customize the SVG path for navigation button icons.
+
+#### `buttonIcon.path`
+- **Type**: `string`
+- **Default**: `'M4 16L12 8L20 16'`
+- **Description**: The SVG path data for the navigation button icons.
+
+## Example Configuration
+
+Here's a complete example showing all available options:
 
 ```javascript title="astro.config.mjs"
 import { starlight } from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
-import starlightScrollToTop from 'starlight-scroll-to-top'
+import starlightCustomNavigation from 'starlight-custom-navigation'
 
 export default defineConfig({
   integrations: [
     starlight({
       plugins: [
-        starlightScrollToTop({
-               // Configuration options go here.
+        starlightCustomNavigation({
+          // Link label configuration
+          linkLabels: {
+            show: true,
+            showOnHover: true,
+            buttonRadiusNoLabel: 24
+          },
+          // Keyboard shortcuts
+          navShortcuts: {
+            previous: { key: 'ArrowLeft', modifier: 'ctrl' },
+            next: { key: 'ArrowRight', modifier: 'ctrl' }
+          },
+          // Custom button icon
+          buttonIcon: {
+            path: 'M4 16L12 8L20 16'
+          }
         }),
       ],
       title: 'My Docs',
     }),
   ],
 })
-
 ```
 
-## Configuration Options
+## Mobile Support
+
+The plugin includes built-in support for mobile devices:
+
+- Touch swipe gestures for navigation (swipe left/right)
+- Responsive button sizing
+- Automatic hiding of labels on small screens
+- Touch-friendly button placement
+
+
