@@ -16,7 +16,15 @@ export default defineConfig({
       title: 'Starlight Custom Navigation',
       favicon: '/images/navigation-sailing.svg',      
       plugins: [starlightCustomNavigation({
-        showLabels: true,
+        showLabels: false,
+        showLabelsOnHover: false,
+        navShortcuts: {
+          previous: { key: 'ArrowLeft', modifier: 'ctrl' },
+          next: { key: 'ArrowRight', modifier: 'ctrl' }
+        },
+        buttonIcon: {
+          path: 'm12 19-7-7 7-7'
+        }
       })],
       sidebar: [
         {

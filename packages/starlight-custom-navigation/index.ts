@@ -6,7 +6,15 @@ import type { StarlightCustomNavigationConfig } from './types/CustomNavigationCo
 
 export default function starlightCustomNavigationPlugin(
   userConfig: StarlightCustomNavigationConfig = {
-    showLabels: true
+    showLabels: true,
+    showLabelsOnHover: true,
+    navShortcuts: {
+      previous: { key: 'ArrowLeft', modifier: 'ctrl' },
+      next: { key: 'ArrowRight', modifier: 'ctrl' }
+    },
+    buttonIcon: {
+      path: 'M4 16L12 8L20 16'  
+    },    
   }
 ): StarlightPlugin {
   return {
