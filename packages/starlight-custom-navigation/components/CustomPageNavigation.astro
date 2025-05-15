@@ -1,4 +1,10 @@
 ---
+import { config } from 'virtual:starlight-custom-navigation-config';
+
+// Get configuration from props or virtual module
+const { showLabels: propShowLabels } = Astro.props;
+const showLabels = propShowLabels ?? config.showLabels ?? true;
+
 const { pagination } = Astro.locals.starlightRoute;
 const { prev, next } = pagination;
 ---
@@ -12,26 +18,30 @@ const { prev, next } = pagination;
             <path d="m12 19-7-7 7-7"></path>
           </svg>
         </div>
-        <div class="nav-button-text">
-          <div class="arrow-direction">{Astro.locals.t('page.previousLink')}</div>
-          <div class="nav-label">{prev.label || 'Previous Page'}</div>
-        </div>
+        {showLabels && (
+          <div class="nav-button-text">
+            <div class="arrow-direction">{Astro.locals.t('page.previousLink')}</div>
+            <div class="nav-label">{prev.label || 'Previous Page'}</div>
+          </div>
+        )}
       </a>
     )}
 
     {next && (
       <a href={next.href} class="nav-button next-button" id="next-page-link">
-        <div class="nav-button-text">
-          <div class="arrow-direction">{Astro.locals.t('page.nextLink')}</div>
-          <div class="nav-label">{next.label || 'Next Page'}</div>
-      </div>
-      <div class="nav-button-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14"></path>
-          <path d="m12 5 7 7-7 7"></path>
-        </svg>
-      </div>
-    </a>
+        {showLabels && (
+          <div class="nav-button-text">
+            <div class="arrow-direction">{Astro.locals.t('page.nextLink')}</div>
+            <div class="nav-label">{next.label || 'Next Page'}</div>
+          </div>
+        )}
+        <div class="nav-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </div>
+      </a>
     )}
   </div>
    

@@ -3,15 +3,21 @@ import { defineConfig } from 'astro/config'
 import starlightCustomNavigation from 'starlight-custom-navigation'
 
 const siteURI = 'https://frostybee.github.io';
+
+export interface StarlightCustomNavigationConfig {
+  showLabels?: boolean;
+}
+
 export default defineConfig({
   site: siteURI,
   base: "/starlight-custom-navigation",
   integrations: [
     starlight({
-      editLink: {
-        baseUrl: 'https://github.com/frostybee/starlight-custom-navigation/edit/main/docs/',
-      },
-      plugins: [starlightCustomNavigation()],
+      title: 'Starlight Custom Navigation',
+      favicon: '/images/navigation-sailing.svg',      
+      plugins: [starlightCustomNavigation({
+        showLabels: true,
+      })],
       sidebar: [
         {
           label: 'Start Here',
@@ -22,8 +28,10 @@ export default defineConfig({
       ],
       social: [
         { href: 'https://github.com/frostybee/starlight-custom-navigation', icon: 'github', label: 'GitHub' },
-      ],
-      title: 'Starlight Custom Navigation',
+      ],      
+      editLink: {
+        baseUrl: 'https://github.com/frostybee/starlight-custom-navigation/edit/main/docs/',
+      },
     }),
   ],
 })
