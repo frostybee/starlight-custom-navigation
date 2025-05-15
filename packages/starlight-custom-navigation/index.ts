@@ -15,6 +15,7 @@ export default function starlightCustomNavigationPlugin(
     buttonIcon: {
       path: 'M4 16L12 8L20 16'  
     },    
+    buttonRadius: 24
   }
 ): StarlightPlugin {
   return {

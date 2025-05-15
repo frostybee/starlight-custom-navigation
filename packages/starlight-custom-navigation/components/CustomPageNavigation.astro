@@ -7,6 +7,9 @@ const { prev, next } = pagination;
 // Get configuration from virtual module
 const showLabels = config.showLabels ?? true;
 const showLabelsOnHover = config.showLabelsOnHover ?? true;
+// Default to 24px (48px diameter)
+let buttonRadius = config.buttonRadius ?? "24"; 
+buttonRadius = buttonRadius + "px";
 const navShortcuts = config.navShortcuts ?? {
   previous: { key: 'ArrowLeft', modifier: 'ctrl' },
   next: { key: 'ArrowRight', modifier: 'ctrl' }
@@ -123,7 +126,7 @@ const getButtonIcon = () => {
   });
 </script>
 
-<style>
+<style define:vars={{ buttonRadius }}>
   @layer starlight-custom-navigation {
     .navigation-controls {
       position: relative;
@@ -147,9 +150,7 @@ const getButtonIcon = () => {
       border-radius: 5px;
       z-index: 999;
       pointer-events: auto;
-      /* Combine transforms for vertical centering and initial offset */
       transform: translateY(-50%);
-      /* Single transition for all animatable properties */
       transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease, transform 0.3s ease, padding 0.3s ease;
       opacity: 1;
     }
@@ -157,9 +158,9 @@ const getButtonIcon = () => {
     /* Compact button style when labels are hidden */
     .nav-button:not(:has(.nav-button-text)) {
       padding: 0.75rem;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
+      border-radius: var(--buttonRadius);
+      /* width: calc(var(--buttonRadius) * 1.2); */
+      /* height: calc(var(--buttonRadius) * 1.2); */
       justify-content: center;
     }
 
@@ -172,7 +173,7 @@ const getButtonIcon = () => {
     /* Hidden state for buttons */
     .nav-hidden {
       opacity: 0;
-      pointer-events: none; /* Prevent interaction when hidden */
+      pointer-events: none; 
     }
 
     .nav-hidden:hover {
@@ -191,11 +192,12 @@ const getButtonIcon = () => {
     }
 
     .prev-button:hover {
-      transform: translateY(-50%) translateX(0); /* Preserve vertical centering */
+      /* Preserve vertical centering */
+      transform: translateY(-50%) translateX(0); 
     }
 
     .prev-button .nav-button-icon {
-      margin-right: 0.5rem;
+      margin-left: 0.5rem;
     }
 
     /* Next button specific styling */
@@ -274,6 +276,11 @@ const getButtonIcon = () => {
       flex-direction: column;
       align-items: center;
       gap: 2px;
+    }
+    
+    /* Show the link label below the nav buttons when labels are hidden */
+    .nav-button:not(:has(.nav-button-text)) .shortcut-tooltip {
+      bottom: -60px;
     }
 
     .nav-button:hover .shortcut-tooltip {

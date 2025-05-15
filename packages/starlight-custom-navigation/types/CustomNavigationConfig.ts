@@ -34,5 +34,10 @@ export interface StarlightCustomNavigationConfig {
     buttonIcon?: {
         path: string;
     };
+    /**
+     * The radius of the navigation buttons when labels are hidden.
+     * @default 24px
+     */
+    buttonRadius?: number;
 }
 
