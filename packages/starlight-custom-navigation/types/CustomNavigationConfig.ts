@@ -1,18 +1,28 @@
 /**
  * The configuration object for the starlight-custom-navigation plugin.
- * @property showLabels - Whether to show the labels on the navigation buttons.
  */
 export interface StarlightCustomNavigationConfig {
     /**
-     * Whether to show the labels on the navigation buttons.
-     * @default true
+     * Configuration for navigation button labels.
+     * @default { show: true, showOnHover: true }
      */
-    showLabels?: boolean;
-    /**
-     * Whether to show the labels in tooltips when hovering over navigation buttons.
-     * @default true
-     */
-    showLabelsOnHover?: boolean;
+    linkLabels?: {
+        /**
+         * Whether to show the labels on the navigation buttons.
+         * @default true
+         */
+        show?: boolean;
+        /**
+         * Whether to show the labels in tooltips when hovering over navigation buttons.
+         * @default true
+         */
+        showOnHover?: boolean;
+        /**
+         * The radius of the navigation buttons when labels are hidden.
+         * @default 24px
+         */
+        buttonRadiusWhenNoLabel?: number;
+    };
     /**
      * The keyboard shortcuts to be used for navigating between pages.
      * @default { previous: { key: 'ArrowLeft', modifier: 'ctrl' }, next: { key: 'ArrowRight', modifier: 'ctrl' } }

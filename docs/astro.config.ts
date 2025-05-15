@@ -17,16 +17,18 @@ export default defineConfig({
       favicon: '/images/navigation-sailing.svg',
       plugins: [
         starlightCustomNavigation({
-          showLabels: false,
-          showLabelsOnHover: true,
+          linkLabels: {
+            show: false,
+            showOnHover: true,
+            buttonRadiusWhenNoLabel: 15
+          },
           navShortcuts: {
             previous: { key: 'ArrowLeft', modifier: 'ctrl' },
             next: { key: 'ArrowRight', modifier: 'ctrl' }
           },
           buttonIcon: {
             path: 'm12 19-7-7 7-7'
-          },
-          buttonRadius: 10
+          },          
         })],
       sidebar: [
         {

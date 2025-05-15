@@ -5,10 +5,10 @@ const { pagination } = Astro.locals.starlightRoute;
 const { prev, next } = pagination;
 
 // Get configuration from virtual module
-const showLabels = config.showLabels ?? true;
-const showLabelsOnHover = config.showLabelsOnHover ?? true;
-// Default to 24px (48px diameter)
-let buttonRadius = config.buttonRadius ?? "24"; 
+const linkLabels = config.linkLabels ?? { show: true, showOnHover: true, buttonRadiusWhenNoLabel: 24 };
+const showLabels = linkLabels.show;
+const showLabelsOnHover = linkLabels.showOnHover;
+let buttonRadius = linkLabels.buttonRadiusWhenNoLabel ?? "24"; 
 buttonRadius = buttonRadius + "px";
 const navShortcuts = config.navShortcuts ?? {
   previous: { key: 'ArrowLeft', modifier: 'ctrl' },
@@ -100,6 +100,37 @@ const getButtonIcon = () => {
       if (nextLink) nextLink.click();
     }
   });
+
+  // Add touch swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const minSwipeDistance = 50; // Minimum distance required for a swipe
+
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeDistance = touchEndX - touchStartX;
+    
+    // Only trigger if swipe distance is greater than minimum
+    if (Math.abs(swipeDistance) < minSwipeDistance) return;
+
+    if (swipeDistance > 0) {
+      // Swipe right - go to previous page
+      const prevLink = document.getElementById('prev-page-link');
+      if (prevLink) prevLink.click();
+    } else {
+      // Swipe left - go to next page
+      const nextLink = document.getElementById('next-page-link');
+      if (nextLink) nextLink.click();
+    }
+  }
 
   // Show/hide navigation on scroll
   let lastScrollY = window.scrollY;
@@ -279,7 +310,7 @@ const getButtonIcon = () => {
     }
     
     /* Show the link label below the nav buttons when labels are hidden */
-    .nav-button:not(:has(.nav-button-text)) .shortcut-tooltip {
+    .nav-button:not(:has(.nav-button-text)) .shortcut-tooltip  {
       bottom: -60px;
     }
 
