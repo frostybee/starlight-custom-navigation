@@ -27,7 +27,7 @@ export default defineConfig({
             next: { key: 'ArrowRight', modifier: 'ctrl' }
           },
           buttonIcon: {
-            path: 'm12 19-7-7 7-7'
+            svgPath: 'm12 19-7-7 7-7'
           },
         })],
       sidebar: [

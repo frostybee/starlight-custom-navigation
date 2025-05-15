@@ -1,7 +1,7 @@
 /**
  * The configuration object for the starlight-custom-navigation plugin.
  */
-export interface StarlightCustomNavigationConfig {
+export interface CustomNavOptions {
     /**
      * Configuration for navigation button labels.
      * @default { show: true, showOnHover: true }
@@ -42,7 +42,7 @@ export interface StarlightCustomNavigationConfig {
      * @default { path: 'M4 16L12 8L20 16' }
      */
     buttonIcon?: {
-        path: string;
+        svgPath: string;
     };
     /**
      * The radius of the navigation buttons when labels are hidden.

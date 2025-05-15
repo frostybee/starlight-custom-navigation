@@ -1,7 +1,7 @@
 import type { Plugin } from 'vite';
-import type { StarlightCustomNavigationConfig } from '../types/CustomNavigationConfig.js';
+import type { CustomNavOptions } from '../types/CustomNavOptions.js';
 
-const virtualModuleId = 'virtual:starlight-custom-navigation-config';
+const virtualModuleId = 'virtual:custom-navigation-options';
 const resolvedVirtualModuleId = '\0' + virtualModuleId;
 
 /**
@@ -10,7 +10,7 @@ const resolvedVirtualModuleId = '\0' + virtualModuleId;
  * @returns A Vite plugin that provides the configuration to the CustomPageNavigation component.
  */
 export default function starlightCustomNavigationVitePlugin(
-  config: StarlightCustomNavigationConfig = {}
+  config: CustomNavOptions = {}
 ): Plugin {
   return {
     name: 'starlight-custom-navigation-vite',

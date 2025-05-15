@@ -1,11 +1,11 @@
 import type { StarlightPlugin, StarlightUserConfig } from '@astrojs/starlight/types'
 
 import starlightCustomNavigationIntegration from './libs/integration.js'
-import type { StarlightCustomNavigationConfig } from './types/CustomNavigationConfig.js'
+import type { CustomNavOptions } from './types/CustomNavOptions.js'
 
 
 export default function starlightCustomNavigationPlugin(
-  userConfig: StarlightCustomNavigationConfig = {
+  userConfig: CustomNavOptions = {
     linkLabels: {
       show: true,
       showOnHover: true,
@@ -16,7 +16,7 @@ export default function starlightCustomNavigationPlugin(
       next: { key: 'ArrowRight', modifier: 'ctrl' }
     },
     buttonIcon: {
-      path: 'M4 16L12 8L20 16'  
+      svgPath: 'M4 16L12 8L20 16'  
     },        
   }
 ): StarlightPlugin {

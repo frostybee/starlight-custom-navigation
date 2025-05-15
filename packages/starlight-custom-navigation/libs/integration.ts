@@ -1,9 +1,9 @@
 import type { AstroIntegration } from 'astro';
-import type { StarlightCustomNavigationConfig } from '../types/CustomNavigationConfig.js';
+import type { CustomNavOptions } from '../types/CustomNavOptions.js';
 import starlightCustomNavigationVitePlugin from './vite.ts';
 
 export default function starlightCustomNavigationIntegration(
-  userConfig: StarlightCustomNavigationConfig = {}  
+  userConfig: CustomNavOptions = {}  
 ): AstroIntegration {
   return {
     name: 'starlight-custom-navigation-integration',
@@ -17,7 +17,7 @@ export default function starlightCustomNavigationIntegration(
         });
       },
       'astro:build:done': ({ logger }) => {
-        logger.info(`Starlight custom navigation plugin has been installed successfully! Configuration:`,   userConfig);
+        logger.info(`Starlight custom navigation plugin has been installed successfully! Configuration: ${JSON.stringify(userConfig)}`);
       }
     }
   };
