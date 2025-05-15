@@ -8,7 +8,7 @@ const { prev, next } = pagination;
 const linkLabels = config.linkLabels ?? { show: true, showOnHover: true, buttonRadiusWhenNoLabel: 24 };
 const showLabels = linkLabels.show;
 const showLabelsOnHover = linkLabels.showOnHover;
-let buttonRadius = linkLabels.buttonRadiusWhenNoLabel ?? "24"; 
+let buttonRadius = linkLabels.buttonRadiusNoLabel ?? "24"; 
 buttonRadius = buttonRadius + "px";
 const navShortcuts = config.navShortcuts ?? {
   previous: { key: 'ArrowLeft', modifier: 'ctrl' },

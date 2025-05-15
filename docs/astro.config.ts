@@ -20,7 +20,7 @@ export default defineConfig({
           linkLabels: {
             show: false,
             showOnHover: true,
-            buttonRadiusWhenNoLabel: 15
+            buttonRadiusNoLabel: 15
           },
           navShortcuts: {
             previous: { key: 'ArrowLeft', modifier: 'ctrl' },

@@ -21,7 +21,7 @@ export interface StarlightCustomNavigationConfig {
          * The radius of the navigation buttons when labels are hidden.
          * @default 24px
          */
-        buttonRadiusWhenNoLabel?: number;
+        buttonRadiusNoLabel?: number;
     };
     /**
      * The keyboard shortcuts to be used for navigating between pages.

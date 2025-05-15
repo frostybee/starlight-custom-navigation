@@ -9,7 +9,7 @@ export default function starlightCustomNavigationPlugin(
     linkLabels: {
       show: true,
       showOnHover: true,
-      buttonRadiusWhenNoLabel: 24
+      buttonRadiusNoLabel: 24
     },
     navShortcuts: {
       previous: { key: 'ArrowLeft', modifier: 'ctrl' },
