@@ -134,41 +134,11 @@ const getButtonIcon = () => {
     let touchEndY = 0;
 
     // Minimum distance required for a swipe to be registered
-    const minSwipeDistance = 150;
+    const minSwipeDistance = 75;
 
     // Get next and previous links from Starlight navigation
     const prevLink = document.getElementById("prev-page-link");
     const nextLink = document.getElementById("next-page-link");
-
-    // Create swipe hint elements
-    const createSwipeHints = () => {
-      const body = document.body;
-
-      // Create previous hint if prev link exists
-      if (prevLink) {
-        const prevHint = document.createElement("div");
-        prevHint.className = "swipe-hint swipe-hint-prev";
-        prevHint.innerHTML = "&larr;";
-        prevHint.id = "swipe-hint-prev";
-        body.appendChild(prevHint);
-      }
-
-      // Create next hint if next link exists
-      if (nextLink) {
-        const nextHint = document.createElement("div");
-        nextHint.className = "swipe-hint swipe-hint-next";
-        nextHint.innerHTML = "&rarr;";
-        nextHint.id = "swipe-hint-next";
-        body.appendChild(nextHint);
-      }
-    };
-
-    // Create the hint elements
-    createSwipeHints();
-
-    // Get the hint elements
-    const prevHint = document.getElementById("swipe-hint-prev");
-    const nextHint = document.getElementById("swipe-hint-next");
 
     // Touch event handlers
     document.addEventListener(
@@ -186,10 +156,6 @@ const getButtonIcon = () => {
         touchEndX = e.changedTouches[0].screenX;
         touchEndY = e.changedTouches[0].screenY;
         handleSwipe();
-
-        // Hide hints on touch end
-        if (prevHint) prevHint.classList.remove("visible");
-        if (nextHint) nextHint.classList.remove("visible");
       },
       false
     );
@@ -219,7 +185,7 @@ const getButtonIcon = () => {
       }
     };
 
-    // Add visual feedback
+    // Add subtle visual feedback for content sliding
     const content = document.querySelector(".main-frame");
     if (content) {
       let touchActive = false;
@@ -237,25 +203,13 @@ const getButtonIcon = () => {
         const currentX = e.touches[0].clientX;
         const diff = currentX - touchStartX;
 
-        // Show appropriate hint based on swipe direction and if navigation is possible
-        if (diff > 20 && prevLink) {
-          if (prevHint) prevHint.classList.add("visible");
-          if (nextHint) nextHint.classList.remove("visible");
-        } else if (diff < -20 && nextLink) {
-          if (nextHint) nextHint.classList.add("visible");
-          if (prevHint) prevHint.classList.remove("visible");
-        } else {
-          if (prevHint) prevHint.classList.remove("visible");
-          if (nextHint) nextHint.classList.remove("visible");
-        }
-
         // Only allow dragging in directions where navigation is possible
         if ((diff > 0 && !prevLink) || (diff < 0 && !nextLink)) {
           return;
         }
 
         // Apply a resistance factor to make dragging feel natural
-        const resistance = 6;
+        const resistance = 3;
         initialOffset = diff / resistance;
 
         // Apply transform for visual feedback
@@ -470,42 +424,6 @@ const getButtonIcon = () => {
     .tooltip-shortcut {
       opacity: 0.8;
       font-size: 0.7rem;
-    }
-
-    .main-frame {
-      will-change: transform;
-    }
-
-    .swipe-hint {
-      position: fixed;
-      top: 50%;
-      height: 60px;
-      width: 30px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 15px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      transform: translateY(-50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 24px;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .swipe-hint-prev {
-      left: 10px;
-    }
-
-    .swipe-hint-next {
-      right: 10px;
-    }
-
-    .swipe-hint.visible {
-      opacity: 0.9;
     }
 
     /* For mobile responsiveness */
