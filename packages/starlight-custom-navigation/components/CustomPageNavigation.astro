@@ -134,7 +134,7 @@ const getButtonIcon = () => {
     let touchEndY = 0;
 
     // Minimum distance required for a swipe to be registered
-    const minSwipeDistance = 100;
+    const minSwipeDistance = 150;
 
     // Get next and previous links from Starlight navigation
     const prevLink = document.getElementById("prev-page-link");
@@ -255,7 +255,7 @@ const getButtonIcon = () => {
         }
 
         // Apply a resistance factor to make dragging feel natural
-        const resistance = 3;
+        const resistance = 6;
         initialOffset = diff / resistance;
 
         // Apply transform for visual feedback
@@ -481,7 +481,7 @@ const getButtonIcon = () => {
       top: 50%;
       height: 60px;
       width: 30px;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.5);
       border-radius: 15px;
       opacity: 0;
       transition: opacity 0.3s;
@@ -491,8 +491,9 @@ const getButtonIcon = () => {
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 20px;
+      font-size: 24px;
       z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .swipe-hint-prev {
@@ -504,7 +505,7 @@ const getButtonIcon = () => {
     }
 
     .swipe-hint.visible {
-      opacity: 0.7;
+      opacity: 0.9;
     }
 
     /* For mobile responsiveness */
