@@ -4,6 +4,8 @@ import { config } from 'virtual:custom-navigation-options';
 const { pagination } = Astro.locals.starlightRoute;
 const { prev, next } = pagination;
 
+//TODO: refactor the destructuring to use the config object directly.
+//TODO: Use Zod library to validate the config object.
 // Get configuration from virtual module
 const linkLabels = config.linkLabels ?? { show: true, showOnHover: true, buttonRadiusWhenNoLabel: 24 };
 const showLabels = linkLabels.show;
@@ -14,8 +16,9 @@ const navShortcuts = config.navShortcuts ?? {
   previous: { key: 'ArrowLeft', modifier: 'ctrl' },
   next: { key: 'ArrowRight', modifier: 'ctrl' }
 };
-const buttonIcon = config.buttonIcon ?? {
-  svgPath: 'M4 16L12 8L20 16'
+const svgIcon = config.svgIcon ?? {
+  path: 'M4 16L12 8L20 16',
+  strokeWidth: 2
 };
 
 
@@ -33,9 +36,8 @@ const formatShortcut = (shortcut: { key: string, modifier: string }) => {
 
 // Get the button icon
 const getButtonIcon = () => {  
-  
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="${buttonIcon.svgPath}"></path>
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${svgIcon.strokeWidth}" stroke-linecap="round" stroke-linejoin="round">
+            <path d="${svgIcon.path}"></path>
           </svg>`;
 };
 
@@ -153,7 +155,7 @@ const getButtonIcon = () => {
       });
 
       ticking = true;
-    }
+  }
   });
 </script>
 

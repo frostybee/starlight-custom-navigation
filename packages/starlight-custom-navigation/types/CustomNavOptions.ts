@@ -39,10 +39,11 @@ export interface CustomNavOptions {
     };
     /**
      * The SVG path data for the navigation button icons.
-     * @default { path: 'M4 16L12 8L20 16' }
+     * @default { path: 'M4 16L12 8L20 16', strokeWidth: 2 }
      */
-    buttonIcon?: {
-        svgPath: string;
+    svgIcon?: {
+        path?: string;
+        strokeWidth?: number;
     };
     /**
      * The radius of the navigation buttons when labels are hidden.

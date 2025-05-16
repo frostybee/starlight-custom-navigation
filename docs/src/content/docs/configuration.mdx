@@ -64,13 +64,18 @@ The Starlight custom navigation plugin **accepts an object** with the following 
 
 ### `buttonIcon`
 - **Type**: `object`
-- **Default**: `{ path: 'M4 16L12 8L20 16' }`
-- **Description**: Customize the SVG path for navigation button icons.
+- **Default**: `{ path: 'M4 16L12 8L20 16', strokeWidth: 2 }`
+- **Description**: Customize the SVG path and stroke width for navigation button icons.
 
 #### `buttonIcon.path`
 - **Type**: `string`
 - **Default**: `'M4 16L12 8L20 16'`
 - **Description**: The SVG path data for the navigation button icons.
+
+#### `buttonIcon.strokeWidth`
+- **Type**: `number`
+- **Default**: `2`
+- **Description**: The width of the stroke for the navigation button icons.
 
 ## Example Configuration
 
@@ -99,7 +104,8 @@ export default defineConfig({
           },
           // Custom button icon
           buttonIcon: {
-            path: 'M4 16L12 8L20 16'
+            path: 'M4 16L12 8L20 16',
+            strokeWidth: 3
           }
         }),
       ],
