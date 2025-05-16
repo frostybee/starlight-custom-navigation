@@ -27,7 +27,7 @@ export default defineConfig({
             next: { key: 'ArrowRight', modifier: 'ctrl' }
           },
           svgIcon: {
-            path: 'm12 19-7-7 7-7',
+            path: 'M17,5 L7,12 L17,19 L17,5 Z',
             strokeWidth: 3
           },
         })],
