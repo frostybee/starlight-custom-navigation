@@ -39,24 +39,27 @@ export default defineConfig({
 ## SVG Path Collections
 The following tables contain various SVG paths for different arrow styles. You can use these paths to customize the navigation buttons in your project.
 
-### Basic Arrow Styles
+---
+
+### Chevron & Classic Arrow Styles
+---
 
 | Icon Name           | SVG Path (`d` Value)                                                  | Preview |
 | ------------------- | ------------------------------------------------------------------- | ---- |
 | Classic Chevron     | `M16 4L8 12L16 20`                                                  | <SvgIcon d="M16 4L8 12L16 20" stroke="blue" strokeWidth="2" />    |
-| Minimalist Arrow    | `M4 12L20 12M4 12L10 6M4 12L10 18`                                 | <SvgIcon d="M4 12L20 12M4 12L10 6M4 12L10 18" stroke="blue" strokeWidth="2" />    |
 | Thin Arrow Left     | `M14 18L8 12L14 6`                                                 | <SvgIcon d="M14 18L8 12L14 6" stroke="blue" strokeWidth="2" />    |
+| Classic Left Arrow  | `M14,20 L4,12 L14,4 M19,12 H4`                                     | <SvgIcon d="M14,20 L4,12 L14,4 M19,12 H4" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+| Minimalist Arrow    | `M4 12L20 12M4 12L10 6M4 12L10 18`                                 | <SvgIcon d="M4 12L20 12M4 12L10 6M4 12L10 18" stroke="blue" strokeWidth="2" />    |
+| Minimal Arrow       | `M14,12 L10,12 M12,10 L10,12 L12,14`                               | <SvgIcon d="M14,12 L10,12 M12,10 L10,12 L12,14" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+| Wide Arrow          | `M18,17 L8,12 L18,7 M19,12 H7`                                     | <SvgIcon d="M18,17 L8,12 L18,7 M19,12 H7" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+| Modern Arrow        | `M15,17 L9,12 L15,7 M18,12 H9`                                     | <SvgIcon d="M15,17 L9,12 L15,7 M18,12 H9" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+| Long Arrow          | `M17,12 L7,12 M10,8 L6,12 L10,16`                                  | <SvgIcon d="M17,12 L7,12 M10,8 L6,12 L10,16" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
 
-### Advanced Arrow Styles
+---
 
-| Icon Name           | SVG Path (`d` Value)                                                  | Preview |
-| ------------------- | ------------------------------------------------------------------- | ---- |
-| Rounded Arrow       | `M20 12C20 12 12 12 12 12C12 12 14 10 14 8C14 6 12 6 12 6L6 12L12 18C12 18 12 18 12 18C12 18 14 14 14 16C14 18 12 18 12 18` | <SvgIcon d="M20 12C20 12 12 12 12 12C12 12 14 10 14 8C14 6 12 6 12 6L6 12L12 18C12 18 12 18 12 18C12 18 14 14 14 16C14 18 12 18 12 18" stroke="blue" strokeWidth="2" />    |
-| Curved Wing         | `M4 12C4 12 8 8 12 8V6L6 12L12 18V16C8 16 4 12 4 12M20 12H12`     | <SvgIcon d="M4 12C4 12 8 8 12 8V6L6 12L12 18V16C8 16 4 12 4 12M20 12H12" stroke="blue" strokeWidth="2" />    |
-| Rounded Chevron     | `M15 6C15 6 12 10 12 12C12 14 15 18 15 18L8 12L15 6`              | <SvgIcon d="M15 6C15 6 12 10 12 12C12 14 15 18 15 18L8 12L15 6" stroke="blue" strokeWidth="2" /> |
-| Smooth Arc Arrow    | `M16 6C16 6 10 9 10 12C10 15 16 18 16 18L8 12L16 6`               | <SvgIcon d="M16 6C16 6 10 9 10 12C10 15 16 18 16 18L8 12L16 6" stroke="blue" strokeWidth="2" /> |
+### Double & Multi-Arrow Styles
 
-### Double Arrow Styles
+---
 
 | Icon Name           | SVG Path (`d` Value)                                                  | Preview |
 | ------------------- | ------------------------------------------------------------------- | ---- |
@@ -65,45 +68,52 @@ The following tables contain various SVG paths for different arrow styles. You c
 | Offset Chevron      | `M14 4L6 12L14 20M18 4L10 12L18 20`                                 | <SvgIcon d="M14 4L6 12L14 20M18 4L10 12L18 20" stroke="blue" strokeWidth="2" />    |
 | Stepper            | `M20 12H13.6M13.6 12L16.8 8.8M13.6 12L16.8 15.2M11.2 12H4.8M4.8 12L8 8.8M4.8 12L8 15.2` | <SvgIcon d="M20 12H13.6M13.6 12L16.8 8.8M13.6 12L16.8 15.2M11.2 12H4.8M4.8 12L8 8.8M4.8 12L8 15.2" stroke="blue" strokeWidth="2" /> |
 | Minimal Double Arrow | `M16,16 L12,12 L16,8 M12,16 L8,12 L12,8` | <SvgIcon d="M16,16 L12,12 L16,8 M12,16 L8,12 L12,8" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+| Feathered Arrow     | `M17,12 H9 M11,8 L7,12 L11,16 M14,10 L12,12 L14,14`                | <SvgIcon d="M17,12 H9 M11,8 L7,12 L11,16 M14,10 L12,12 L14,14" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
 
-### Filled Arrow Styles
+
+
+### Curved, Rounded & Smooth Arrow Styles
+---
+
+| Icon Name           | SVG Path (`d` Value)                                                  | Preview |
+| ------------------- | ------------------------------------------------------------------- | ---- |
+| Rounded Arrow       | `M20 12C20 12 12 12 12 12C12 12 14 10 14 8C14 6 12 6 12 6L6 12L12 18C12 18 12 18 12 18C12 18 14 14 14 16C14 18 12 18 12 18` | <SvgIcon d="M20 12C20 12 12 12 12 12C12 12 14 10 14 8C14 6 12 6 12 6L6 12L12 18C12 18 12 18 12 18C12 18 14 14 14 16C14 18 12 18 12 18" stroke="blue" strokeWidth="2" />    |
+| Rounded Arrow (alt) | `M16,18 Q16,18 10,12 Q10,12 16,6 M18,12 H8`                         | <SvgIcon d="M16,18 Q16,18 10,12 Q10,12 16,6 M18,12 H8" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+| Curved Wing         | `M4 12C4 12 8 8 12 8V6L6 12L12 18V16C8 16 4 12 4 12M20 12H12`     | <SvgIcon d="M4 12C4 12 8 8 12 8V6L6 12L12 18V16C8 16 4 12 4 12M20 12H12" stroke="blue" strokeWidth="2" />    |
+| Rounded Chevron     | `M15 6C15 6 12 10 12 12C12 14 15 18 15 18L8 12L15 6`              | <SvgIcon d="M15 6C15 6 12 10 12 12C12 14 15 18 15 18L8 12L15 6" stroke="blue" strokeWidth="2" /> |
+| Smooth Arc Arrow    | `M16 6C16 6 10 9 10 12C10 15 16 18 16 18L8 12L16 6`               | <SvgIcon d="M16 6C16 6 10 9 10 12C10 15 16 18 16 18L8 12L16 6" stroke="blue" strokeWidth="2" /> |
+| Curved Arrow        | `M16,16 C14,15 10,14 8,12 C10,10 14,9 16,8`                        | <SvgIcon d="M16,16 C14,15 10,14 8,12 C10,10 14,9 16,8" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+| Tapered Arrow       | `M16,6 C12,8 8,10 8,12 C8,14 12,16 16,18`                          | <SvgIcon d="M16,6 C12,8 8,10 8,12 C8,14 12,16 16,18" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+| Circular Path Arrow | `M14,7 A7,5 0 0 0 14,17 M14,12 H6 M9,9 L6,12 L9,15`                | <SvgIcon d="M14,7 A7,5 0 0 0 14,17 M14,12 H6 M9,9 L6,12 L9,15" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
+
+
+### Filled & Block Arrow Styles
+---
 
 | Icon Name           | SVG Path (`d` Value)                                                  | Preview |
 | ------------------- | ------------------------------------------------------------------- | ---- |
 | Filled Arrowhead    | `M16 6L10 12L16 18L8 12L16 6Z`                                      | <SvgIcon d="M16 6L10 12L16 18L8 12L16 6Z" stroke="blue" strokeWidth="2" />    |
 | Triangle Head Arrow | `M16 6L8 12L16 18V6Z`                                               | <SvgIcon d="M16 6L8 12L16 18V6Z" stroke="blue" strokeWidth="2" />    |
 | Wide Arrowhead      | `M18 6L8 12L18 18L6 12L18 6Z`                                       | <SvgIcon d="M18 6L8 12L18 18L6 12L18 6Z" stroke="blue" strokeWidth="2" />    |
-| Geometric          | `M20 4L8 12L20 20L16 12L20 4Z`                                      | <SvgIcon d="M20 4L8 12L20 20L16 12L20 4Z" stroke="blue" strokeWidth="2" fill="none" /> |
+| Geometric           | `M20 4L8 12L20 20L16 12L20 4Z`                                      | <SvgIcon d="M20 4L8 12L20 20L16 12L20 4Z" stroke="blue" strokeWidth="2" fill="none" /> |
+| Triangle Arrow      | `M16,6 L8,12 L16,18 Z`                                              | <SvgIcon d="M16,6 L8,12 L16,18 Z" stroke="#555" strokeWidth="0.5" strokeLinejoin="round" fill="#fff" /> |
+| Thick Arrow         | `M17,5 L7,12 L17,19 L17,5 Z`                                        | <SvgIcon d="M17,5 L7,12 L17,19 L17,5 Z" stroke="#555" strokeWidth="0.5" strokeLinejoin="round" fill="#fff" /> |
+| Block Arrow         | `M17,7 H11 V5 L7,12 L11,19 V17 H17 Z`                               | <SvgIcon d="M17,7 H11 V5 L7,12 L11,19 V17 H17 Z" stroke="#000" strokeWidth="0.5" fill="#fff" /> |
+| Angular Arrow       | `M16,6 L8,12 L16,18 L13,12 Z`                                       | <SvgIcon d="M16,6 L8,12 L16,18 L13,12 Z" stroke="#555" strokeWidth="0.5" fill="#fff" /> |
 
-### Special Effect Styles
+
+### Special Effect & Decorative Arrow Styles
+---
 
 | Icon Name           | SVG Path (`d` Value)                                                  | Preview |
 | ------------------- | ------------------------------------------------------------------- | ---- |
 | Dashed Line         | `M4 12L10 6M4 12L10 18M10 12H12M14 12H16M18 12H20`                  | <SvgIcon d="M4 12L10 6M4 12L10 18M10 12H12M14 12H16M18 12H20" stroke="blue" strokeWidth="2" />    |
 | Bounce Left         | `M4 12H20M4 12L10 6M4 12L10 18`                                     | <SvgIcon d="M4 12H20M4 12L10 6M4 12L10 18" stroke="blue" strokeWidth="2" />    |
 | Sleek Arrow Left    | `M15 18L9 12L15 6M9 12H20`                                          | <SvgIcon d="M15 18L9 12L15 6M9 12H20" stroke="blue" strokeWidth="2" />    |
+| Dot Arrow           | `M14,6 L8,12 L14,18 M18,12 H8`                                      | <SvgIcon d="M14,6 L8,12 L14,18 M18,12 H8" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" extraElements={<><circle cx="18" cy="12" r="1" fill="#555"/><circle cx="8" cy="12" r="1" fill="#555"/></>} /> |
 
-
-
-| Icon Name | SVG Path (`d` Value) | Preview |
-| --- | --- | --- |
-| Classic Left Arrow | `M14,20 L4,12 L14,4 M19,12 H4` | <SvgIcon d="M14,20 L4,12 L14,4 M19,12 H4" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Rounded Arrow | `M16,18 Q16,18 10,12 Q10,12 16,6 M18,12 H8` | <SvgIcon d="M16,18 Q16,18 10,12 Q10,12 16,6 M18,12 H8" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Curved Arrow | `M16,16 C14,15 10,14 8,12 C10,10 14,9 16,8` | <SvgIcon d="M16,16 C14,15 10,14 8,12 C10,10 14,9 16,8" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Triangle Arrow | `M16,6 L8,12 L16,18 Z` | <SvgIcon d="M16,6 L8,12 L16,18 Z" stroke="#555" strokeWidth="0.5" strokeLinejoin="round" fill="#fff" /> |
-| Thick Arrow | `M17,5 L7,12 L17,19 L17,5 Z` | <SvgIcon d="M17,5 L7,12 L17,19 L17,5 Z" stroke="#555" strokeWidth="0.5" strokeLinejoin="round" fill="#fff" /> |
-| Wide Arrow | `M18,17 L8,12 L18,7 M19,12 H7` | <SvgIcon d="M18,17 L8,12 L18,7 M19,12 H7" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Circular Path Arrow | `M14,7 A7,5 0 0 0 14,17 M14,12 H6 M9,9 L6,12 L9,15` | <SvgIcon d="M14,7 A7,5 0 0 0 14,17 M14,12 H6 M9,9 L6,12 L9,15" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Minimal Arrow | `M14,12 L10,12 M12,10 L10,12 L12,14` | <SvgIcon d="M14,12 L10,12 M12,10 L10,12 L12,14" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Long Arrow | `M17,12 L7,12 M10,8 L6,12 L10,16` | <SvgIcon d="M17,12 L7,12 M10,8 L6,12 L10,16" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Tapered Arrow | `M16,6 C12,8 8,10 8,12 C8,14 12,16 16,18` | <SvgIcon d="M16,6 C12,8 8,10 8,12 C8,14 12,16 16,18" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Feathered Arrow | `M17,12 H9 M11,8 L7,12 L11,16 M14,10 L12,12 L14,14` | <SvgIcon d="M17,12 H9 M11,8 L7,12 L11,16 M14,10 L12,12 L14,14" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Block Arrow | `M17,7 H11 V5 L7,12 L11,19 V17 H17 Z` | <SvgIcon d="M17,7 H11 V5 L7,12 L11,19 V17 H17 Z" stroke="#000" strokeWidth="0.5" fill="#fff" /> |
-| Angular Arrow | `M16,6 L8,12 L16,18 L13,12 Z` | <SvgIcon d="M16,6 L8,12 L16,18 L13,12 Z" stroke="#555" strokeWidth="0.5" fill="#fff" /> |
-| Modern Arrow | `M15,17 L9,12 L15,7 M18,12 H9` | <SvgIcon d="M15,17 L9,12 L15,7 M18,12 H9" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" /> |
-| Dot Arrow | `M14,6 L8,12 L14,18 M18,12 H8` | <SvgIcon d="M14,6 L8,12 L14,18 M18,12 H8" stroke="#555" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" extraElements={<><circle cx="18" cy="12" r="1" fill="#555"/><circle cx="8" cy="12" r="1" fill="#555"/></>} /> |
-
-### Customizing Stroke Width
+## Customizing Stroke Width
+---
 
 You can adjust the thickness of the navigation arrows by modifying the `strokeWidth` property. Here are some examples:
 
@@ -126,7 +136,3 @@ buttonIcon: {
     strokeWidth: 3
 }
 ```
-
-
-
- 
