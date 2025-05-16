@@ -1,5 +1,5 @@
 ---
-import { config } from 'virtual:custom-navigation-options';
+import { config } from "virtual:custom-navigation-options";
 
 const { pagination } = Astro.locals.starlightRoute;
 const { prev, next } = pagination;
@@ -7,86 +7,108 @@ const { prev, next } = pagination;
 //TODO: refactor the destructuring to use the config object directly.
 //TODO: Use Zod library to validate the config object.
 // Get configuration from virtual module
-const linkLabels = config.linkLabels ?? { show: true, showOnHover: true, buttonRadiusWhenNoLabel: 24 };
+const linkLabels = config.linkLabels ?? {
+  show: true,
+  showOnHover: true,
+  buttonRadiusWhenNoLabel: 24,
+};
 const showLabels = linkLabels.show;
 const showLabelsOnHover = linkLabels.showOnHover;
-let buttonRadius = linkLabels.buttonRadiusNoLabel ?? "24"; 
+let buttonRadius = linkLabels.buttonRadiusNoLabel ?? "24";
 buttonRadius = buttonRadius + "px";
 const navShortcuts = config.navShortcuts ?? {
-  previous: { key: 'ArrowLeft', modifier: 'ctrl' },
-  next: { key: 'ArrowRight', modifier: 'ctrl' }
+  previous: { key: "ArrowLeft", modifier: "ctrl" },
+  next: { key: "ArrowRight", modifier: "ctrl" },
 };
 const svgIcon = config.svgIcon ?? {
-  path: 'M4 16L12 8L20 16',
-  strokeWidth: 2
+  svgPath: "M4 16L12 8L20 16",
+  strokeWidth: 2,
 };
 
-
 // Format shortcut for display
-const formatShortcut = (shortcut: { key: string, modifier: string }) => {
-  if (!shortcut) return '';
-  const modifier = shortcut.modifier.charAt(0).toUpperCase() + shortcut.modifier.slice(1);
-  const key = shortcut.key.replace('Arrow', '');
-  
+const formatShortcut = (shortcut: { key: string; modifier: string }) => {
+  if (!shortcut) return "";
+  const modifier =
+    shortcut.modifier.charAt(0).toUpperCase() + shortcut.modifier.slice(1);
+  const key = shortcut.key.replace("Arrow", "");
+
   // Replace ArrowRight/ArrowLeft with arrow symbols
-  const displayKey = key === 'Right' ? '→' : key === 'Left' ? '←' : key;
-  
+  const displayKey = key === "Right" ? "→" : key === "Left" ? "←" : key;
+
   return `${modifier} + ${displayKey}`;
 };
 
 // Get the button icon
-const getButtonIcon = () => {  
+const getButtonIcon = () => {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${svgIcon.strokeWidth}" stroke-linecap="round" stroke-linejoin="round">
-            <path d="${svgIcon.path}"></path>
+            <path d="${svgIcon.svgPath}"></path>
           </svg>`;
 };
-
 ---
 
 <div class="navigation-controls">
-    {prev && (
-      <a href={prev.href} rel="prev" class="nav-button prev-button" id="prev-page-link">
+  {
+    prev && (
+      <a
+        href={prev.href}
+        rel="prev"
+        class="nav-button prev-button"
+        id="prev-page-link"
+      >
         <div class="nav-button-icon">
           <Fragment set:html={getButtonIcon()} />
         </div>
         {showLabels && (
           <div class="nav-button-text">
-            <div class="arrow-direction">{Astro.locals.t('page.previousLink')}</div>
-            <div class="nav-label">{prev.label || 'Previous Page'}</div>
+            <div class="arrow-direction">
+              {Astro.locals.t("page.previousLink")}
+            </div>
+            <div class="nav-label">{prev.label || "Previous Page"}</div>
           </div>
         )}
         <div class="shortcut-tooltip">
-          {!showLabels && showLabelsOnHover && <div class="tooltip-label">{prev.label || 'Previous Page'}</div>}
-          <div class="tooltip-shortcut">{formatShortcut(navShortcuts.previous)}</div>
+          {!showLabels && showLabelsOnHover && (
+            <div class="tooltip-label">{prev.label || "Previous Page"}</div>
+          )}
+          <div class="tooltip-shortcut">
+            {formatShortcut(navShortcuts.previous)}
+          </div>
         </div>
       </a>
-    )}
+    )
+  }
 
-    {next && (
+  {
+    next && (
       <a href={next.href} class="nav-button next-button" id="next-page-link">
         {showLabels && (
           <div class="nav-button-text">
-            <div class="arrow-direction">{Astro.locals.t('page.nextLink')}</div>
-            <div class="nav-label">{next.label || 'Next Page'}</div>
+            <div class="arrow-direction">{Astro.locals.t("page.nextLink")}</div>
+            <div class="nav-label">{next.label || "Next Page"}</div>
           </div>
         )}
         <div class="nav-button-icon">
           <Fragment set:html={getButtonIcon()} />
         </div>
         <div class="shortcut-tooltip">
-          {!showLabels && showLabelsOnHover && <div class="tooltip-label">{next.label || 'Next Page'}</div>}
-          <div class="tooltip-shortcut">{formatShortcut(navShortcuts.next)}</div>
+          {!showLabels && showLabelsOnHover && (
+            <div class="tooltip-label">{next.label || "Next Page"}</div>
+          )}
+          <div class="tooltip-shortcut">
+            {formatShortcut(navShortcuts.next)}
+          </div>
         </div>
       </a>
-    )}
-  </div>
-   
+    )
+  }
+</div>
+
 <script define:vars={{ navShortcuts }}>
   // Add keyboard navigation
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener("keydown", (event) => {
     // Get the key that was pressed
     const key = event.key.toLowerCase();
-    
+
     // Check if the pressed key matches our configured shortcuts
     const checkShortcut = (shortcut) => {
       if (!shortcut) return false;
@@ -95,67 +117,182 @@ const getButtonIcon = () => {
     };
 
     if (checkShortcut(navShortcuts.previous)) {
-      const prevLink = document.getElementById('prev-page-link');
+      const prevLink = document.getElementById("prev-page-link");
       if (prevLink) prevLink.click();
     } else if (checkShortcut(navShortcuts.next)) {
-      const nextLink = document.getElementById('next-page-link');
+      const nextLink = document.getElementById("next-page-link");
       if (nextLink) nextLink.click();
     }
   });
 
-  // Add touch swipe support
-  let touchStartX = 0;
-  let touchEndX = 0;
-  const minSwipeDistance = 50; // Minimum distance required for a swipe
+  // Enable swipe navigation on mobile devices.
+  const enableSwipeNavigation = () => {
+    // State variables for tracking touch events
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
 
-  document.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  }, { passive: true });
+    // Minimum distance required for a swipe to be registered
+    const minSwipeDistance = 100;
 
-  document.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-  }, { passive: true });
+    // Get next and previous links from Starlight navigation
+    const prevLink = document.getElementById("prev-page-link");
+    const nextLink = document.getElementById("next-page-link");
 
-  function handleSwipe() {
-    const swipeDistance = touchEndX - touchStartX;
-    
-    // Only trigger if swipe distance is greater than minimum
-    if (Math.abs(swipeDistance) < minSwipeDistance) return;
+    // Create swipe hint elements
+    const createSwipeHints = () => {
+      const body = document.body;
 
-    if (swipeDistance > 0) {
-      // Swipe right - go to previous page
-      const prevLink = document.getElementById('prev-page-link');
-      if (prevLink) prevLink.click();
-    } else {
-      // Swipe left - go to next page
-      const nextLink = document.getElementById('next-page-link');
-      if (nextLink) nextLink.click();
+      // Create previous hint if prev link exists
+      if (prevLink) {
+        const prevHint = document.createElement("div");
+        prevHint.className = "swipe-hint swipe-hint-prev";
+        prevHint.innerHTML = "&larr;";
+        prevHint.id = "swipe-hint-prev";
+        body.appendChild(prevHint);
+      }
+
+      // Create next hint if next link exists
+      if (nextLink) {
+        const nextHint = document.createElement("div");
+        nextHint.className = "swipe-hint swipe-hint-next";
+        nextHint.innerHTML = "&rarr;";
+        nextHint.id = "swipe-hint-next";
+        body.appendChild(nextHint);
+      }
+    };
+
+    // Create the hint elements
+    createSwipeHints();
+
+    // Get the hint elements
+    const prevHint = document.getElementById("swipe-hint-prev");
+    const nextHint = document.getElementById("swipe-hint-next");
+
+    // Touch event handlers
+    document.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      },
+      false
+    );
+
+    document.addEventListener(
+      "touchend",
+      (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+
+        // Hide hints on touch end
+        if (prevHint) prevHint.classList.remove("visible");
+        if (nextHint) nextHint.classList.remove("visible");
+      },
+      false
+    );
+
+    // Handle the swipe action
+    const handleSwipe = () => {
+      // Calculate distances
+      const horizontalDistance = touchEndX - touchStartX;
+      const verticalDistance = touchEndY - touchStartY;
+
+      // Check if horizontal swipe is more significant than vertical
+      if (Math.abs(horizontalDistance) > Math.abs(verticalDistance)) {
+        // Ensure it's a significant horizontal swipe
+        if (Math.abs(horizontalDistance) < minSwipeDistance) {
+          return;
+        }
+
+        // Right to left swipe (next page)
+        if (horizontalDistance < 0 && nextLink) {
+          nextLink.click();
+        }
+
+        // Left to right swipe (previous page)
+        if (horizontalDistance > 0 && prevLink) {
+          prevLink.click();
+        }
+      }
+    };
+
+    // Add visual feedback
+    const content = document.querySelector(".main-frame");
+    if (content) {
+      let touchActive = false;
+      let initialOffset = 0;
+
+      content.addEventListener("touchstart", () => {
+        touchActive = true;
+        initialOffset = 0;
+        content.style.transition = "";
+      });
+
+      content.addEventListener("touchmove", (e) => {
+        if (!touchActive) return;
+
+        const currentX = e.touches[0].clientX;
+        const diff = currentX - touchStartX;
+
+        // Show appropriate hint based on swipe direction and if navigation is possible
+        if (diff > 20 && prevLink) {
+          if (prevHint) prevHint.classList.add("visible");
+          if (nextHint) nextHint.classList.remove("visible");
+        } else if (diff < -20 && nextLink) {
+          if (nextHint) nextHint.classList.add("visible");
+          if (prevHint) prevHint.classList.remove("visible");
+        } else {
+          if (prevHint) prevHint.classList.remove("visible");
+          if (nextHint) nextHint.classList.remove("visible");
+        }
+
+        // Only allow dragging in directions where navigation is possible
+        if ((diff > 0 && !prevLink) || (diff < 0 && !nextLink)) {
+          return;
+        }
+
+        // Apply a resistance factor to make dragging feel natural
+        const resistance = 3;
+        initialOffset = diff / resistance;
+
+        // Apply transform for visual feedback
+        content.style.transform = `translateX(${initialOffset}px)`;
+      });
+
+      content.addEventListener("touchend", () => {
+        touchActive = false;
+        content.style.transition = "transform 0.3s ease";
+        content.style.transform = "";
+      });
     }
-  }
+  };
+  enableSwipeNavigation();
 
   // Show/hide navigation on scroll
   let lastScrollY = window.scrollY;
   let ticking = false;
 
-  const navControls = document.querySelector('.navigation-controls');
+  const navControls = document.querySelector(".navigation-controls");
 
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     lastScrollY = window.scrollY;
 
     if (!ticking) {
       window.requestAnimationFrame(() => {
         // Hide arrows when scrolling down, show when scrolling up
         if (lastScrollY > 100) {
-          navControls?.classList.add('nav-hidden');
+          navControls?.classList.add("nav-hidden");
         } else {
-          navControls?.classList.remove('nav-hidden');
+          navControls?.classList.remove("nav-hidden");
         }
         ticking = false;
       });
 
       ticking = true;
-  }
+    }
   });
 </script>
 
@@ -184,7 +321,12 @@ const getButtonIcon = () => {
       z-index: 999;
       pointer-events: auto;
       transform: translateY(-50%);
-      transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease, transform 0.3s ease, padding 0.3s ease;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        padding 0.3s ease;
       opacity: 1;
     }
 
@@ -206,7 +348,7 @@ const getButtonIcon = () => {
     /* Hidden state for buttons */
     .nav-hidden {
       opacity: 0;
-      pointer-events: none; 
+      pointer-events: none;
     }
 
     .nav-hidden:hover {
@@ -226,7 +368,7 @@ const getButtonIcon = () => {
 
     .prev-button:hover {
       /* Preserve vertical centering */
-      transform: translateY(-50%) translateX(0); 
+      transform: translateY(-50%) translateX(0);
     }
 
     .prev-button .nav-button-icon {
@@ -295,8 +437,8 @@ const getButtonIcon = () => {
       bottom: -35px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: var(--sl-color-gray-6);      
-      color: var(--sl-color-text);      
+      background-color: var(--sl-color-gray-6);
+      color: var(--sl-color-text);
       padding: 4px 8px;
       border-radius: 4px;
       font-size: 0.75rem;
@@ -310,9 +452,9 @@ const getButtonIcon = () => {
       align-items: center;
       gap: 2px;
     }
-    
+
     /* Show the link label below the nav buttons when labels are hidden */
-    .nav-button:not(:has(.nav-button-text)) .shortcut-tooltip  {
+    .nav-button:not(:has(.nav-button-text)) .shortcut-tooltip {
       bottom: -60px;
     }
 
@@ -328,6 +470,41 @@ const getButtonIcon = () => {
     .tooltip-shortcut {
       opacity: 0.8;
       font-size: 0.7rem;
+    }
+
+    .main-frame {
+      will-change: transform;
+    }
+
+    .swipe-hint {
+      position: fixed;
+      top: 50%;
+      height: 60px;
+      width: 30px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      z-index: 1000;
+    }
+
+    .swipe-hint-prev {
+      left: 10px;
+    }
+
+    .swipe-hint-next {
+      right: 10px;
+    }
+
+    .swipe-hint.visible {
+      opacity: 0.7;
     }
 
     /* For mobile responsiveness */
@@ -347,7 +524,8 @@ const getButtonIcon = () => {
       .nav-button-text {
         display: none; /* Only show icons on mobile */
       }
-      .prev-button, .next-button {
+      .prev-button,
+      .next-button {
         transform: translateX(0);
       }
       .nav-button-icon {

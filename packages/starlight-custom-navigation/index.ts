@@ -16,7 +16,7 @@ export default function starlightCustomNavigationPlugin(
       next: { key: 'ArrowRight', modifier: 'ctrl' }
     },
     svgIcon: {
-      path: 'M4 16L12 8L20 16',
+      svgPath: 'M4 16L12 8L20 16',
       strokeWidth: 2
     },        
   }

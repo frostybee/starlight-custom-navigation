@@ -42,7 +42,7 @@ export interface CustomNavOptions {
      * @default { path: 'M4 16L12 8L20 16', strokeWidth: 2 }
      */
     svgIcon?: {
-        path?: string;
+        svgPath?: string;
         strokeWidth?: number;
     };
     /**
