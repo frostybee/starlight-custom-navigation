@@ -42,6 +42,7 @@ export default defineConfig({
           items: [
             { slug: 'features' },
             { slug: 'configuration' },
+            { slug: 'svg-paths' },
           ],
         },
       ],

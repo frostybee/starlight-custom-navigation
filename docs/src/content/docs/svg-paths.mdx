@@ -1,0 +1,108 @@
+---
+title: SVG Paths
+description: SVG paths for the custom navigation buttons.
+order: 3
+---
+
+import SvgIcon from '../../components/SvgIcon.astro'
+
+The tables below include some SVG paths that can be used for the navigation buttons in the custom navigation plugin.
+
+:::tip
+You can customize the appearance of the navigation buttons by changing the **`path`** and **`strokeWidth`** options in the configuration object passed to the plugin. 
+:::
+
+The example below shows how to **use these paths** in your code:
+```javascript title="astro.config.mjs"
+export default defineConfig({
+   integrations: [
+     starlight({
+       plugins: [
+        starlightCustomNavigation({ 
+            buttonIcon: {
+                path: 'M4 16L12 8L20 16',
+                strokeWidth: 2
+            }
+        })
+       ]
+     })
+   ]
+ });
+```
+
+### Navigation Arrow Styles
+:::note
+The navigation buttons will **automatically rotate** the SVG path 180 degrees for the "**next**" button, so you **only need** to provide the path for the "previous" button.
+:::
+
+
+| Icon Name           | SVG Path (`d` Value)                                                  | Preview |
+| ------------------- | ------------------------------------------------------------------- | ---- |
+| Classic Chevron     | `M8 4L16 12L8 20`                                                  | <SvgIcon d="M8 4L16 12L8 20" stroke="blue" strokeWidth="2" />    |
+| Minimalist Arrow    | `M4 12L20 12M4 12L10 6M4 12L10 18`                                 | <SvgIcon d="M4 12L20 12M4 12L10 6M4 12L10 18" stroke="blue" strokeWidth="2" />    |
+| Rounded Arrow       | `M20 12C20 12 12 12 12 12C12 12 14 10 14 8C14 6 12 6 12 6L6 12L12 18C12 18 12 18 12 18C12 18 14 14 14 16C14 18 12 18 12 18` | <SvgIcon d="M20 12C20 12 12 12 12 12C12 12 14 10 14 8C14 6 12 6 12 6L6 12L12 18C12 18 12 18 12 18C12 18 14 14 14 16C14 18 12 18 12 18" stroke="blue" strokeWidth="2" />    |
+| Double Arrow        | `M6 12L12 6M6 12L12 18M12 12L18 6M12 12L18 18`                      | <SvgIcon d="M6 12L12 6M6 12L12 18M12 12L18 6M12 12L18 18" stroke="blue" strokeWidth="2" />    |
+| Curved Wing         | `M4 12C4 12 8 8 12 8V6L6 12L12 18V16C8 16 4 12 4 12M20 12H12`     | <SvgIcon d="M4 12C4 12 8 8 12 8V6L6 12L12 18V16C8 16 4 12 4 12M20 12H12" stroke="blue" strokeWidth="2" />    |
+| Dashed Line         | `M4 12L10 6M4 12L10 18M10 12H12M14 12H16M18 12H20`                  | <SvgIcon d="M4 12L10 6M4 12L10 18M10 12H12M14 12H16M18 12H20" stroke="blue" strokeWidth="2" />    |
+
+
+| Icon Name             | SVG Path (`d` Value)                                                                 | Preview                                                                 |
+|-----------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| Sharp Angle Left      | `M16 4L8 12L16 20`                                                                 | <SvgIcon d="M16 4L8 12L16 20" stroke="blue" strokeWidth="2" />         |
+| Rounded Chevron       | `M15 6C15 6 12 10 12 12C12 14 15 18 15 18L8 12L15 6`                            | <SvgIcon d="M15 6C15 6 12 10 12 12C12 14 15 18 15 18L8 12L15 6" stroke="blue" strokeWidth="2" /> |
+| Thin Arrow Left       | `M14 18L8 12L14 6`                                                                 | <SvgIcon d="M14 18L8 12L14 6" stroke="blue" strokeWidth="2" />         |
+| Filled Arrowhead      | `M16 6L10 12L16 18L8 12L16 6Z`                                                     | <SvgIcon d="M16 6L10 12L16 18L8 12L16 6Z" stroke="blue" strokeWidth="2" /> |
+| Dotted Arrow Left     | `M15 18L9 12L15 6`                                                                 | <SvgIcon d="M15 18L9 12L15 6" stroke="blue" strokeWidth="2" strokeDasharray="2 2" /> |
+| Curved Tail Arrow     | `M16 6C16 6 12 9 12 12C12 15 16 18 16 18L8 12L16 6`                            | <SvgIcon d="M16 6C16 6 12 9 12 12C12 15 16 18 16 18L8 12L16 6" stroke="blue" strokeWidth="2" /> |
+| Double Chevron        | `M14 18L8 12L14 6M18 18L12 12L18 6`                                               | <SvgIcon d="M14 18L8 12L14 6M18 18L12 12L18 6" stroke="blue" strokeWidth="2" /> |
+| Sleek Arrow Left      | `M15 18L9 12L15 6M9 12H20`                                                         | <SvgIcon d="M15 18L9 12L15 6M9 12H20" stroke="blue" strokeWidth="2" /> |
+| Triangle Head Arrow   | `M16 6L8 12L16 18V6Z`                                                              | <SvgIcon d="M16 6L8 12L16 18V6Z" stroke="blue" strokeWidth="2" />      |
+| Offset Chevron        | `M14 4L6 12L14 20M18 4L10 12L18 20`                                               | <SvgIcon d="M14 4L6 12L14 20M18 4L10 12L18 20" stroke="blue" strokeWidth="2" /> |
+| Smooth Arc Arrow      | `M16 6C16 6 10 9 10 12C10 15 16 18 16 18L8 12L16 6`                            | <SvgIcon d="M16 6C16 6 10 9 10 12C10 15 16 18 16 18L8 12L16 6" stroke="blue" strokeWidth="2" /> |
+| Minimalist Arrow      | `M14 18L8 12L14 6M8 12H18`                                                         | <SvgIcon d="M14 18L8 12L14 6M8 12H18" stroke="blue" strokeWidth="2" /> |
+| Wide Arrowhead        | `M18 6L8 12L18 18L6 12L18 6Z`                                                     | <SvgIcon d="M18 6L8 12L18 18L6 12L18 6Z" stroke="blue" strokeWidth="2" /> |
+
+
+# Left Arrow SVG Path Collection
+
+| Icon Name | SVG Path (`d` Value) | Preview |
+| --------- | ------------------- | ------- |
+| Classic Chevron | `M8 4L16 12L8 20` | <SvgIcon d="M8 4L16 12L8 20" stroke="blue" strokeWidth="2" /> |
+| Minimal | `M16 6L10 12L16 18` | <SvgIcon d="M16 6L10 12L16 18" stroke="blue" strokeWidth="2" /> |
+| Double Chevron | `M12 4L4 12L12 20M20 4L12 12L20 20` | <SvgIcon d="M12 4L4 12L12 20M20 4L12 12L20 20" stroke="blue" strokeWidth="2" /> |
+| Triangular | `M18 4L6 12L18 20` | <SvgIcon d="M18 4L6 12L18 20" stroke="blue" strokeWidth="2" /> |
+| Geometric | `M20 4L8 12L20 20L16 12L20 4Z` | <SvgIcon d="M20 4L8 12L20 20L16 12L20 4Z" stroke="blue" strokeWidth="2" fill="none" /> |
+| Arrow Head | `M20 12H4M4 12L12 4M4 12L12 20` | <SvgIcon d="M20 12H4M4 12L12 4M4 12L12 20" stroke="blue" strokeWidth="2" /> |
+| Thin Stroke | `M20 12H5M5 12L12 5M5 12L12 19` | <SvgIcon d="M20 12H5M5 12L12 5M5 12L12 19" stroke="blue" strokeWidth="1" /> |
+| Bounce Left | `M4 12H20M4 12L10 6M4 12L10 18` | <SvgIcon d="M4 12H20M4 12L10 6M4 12L10 18" stroke="blue" strokeWidth="2" /> |
+| Stepper | `M20 12H13.6M13.6 12L16.8 8.8M13.6 12L16.8 15.2M11.2 12H4.8M4.8 12L8 8.8M4.8 12L8 15.2` | <SvgIcon d="M20 12H13.6M13.6 12L16.8 8.8M13.6 12L16.8 15.2M11.2 12H4.8M4.8 12L8 8.8M4.8 12L8 15.2" stroke="blue" strokeWidth="2" /> |
+
+
+
+### Customizing Stroke Width
+
+You can adjust the thickness of the navigation arrows by modifying the `strokeWidth` property. Here are some examples:
+
+```javascript
+// Thin stroke
+buttonIcon: {
+    path: 'M4 16L12 8L20 16',
+    strokeWidth: 1
+}
+
+// Medium stroke (default)
+buttonIcon: {
+    path: 'M4 16L12 8L20 16',
+    strokeWidth: 2
+}
+
+// Thick stroke
+buttonIcon: {
+    path: 'M4 16L12 8L20 16',
+    strokeWidth: 3
+}
+```
+
+
+
+ 
