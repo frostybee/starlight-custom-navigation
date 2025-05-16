@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-Enhance the reading experience on your Starlight documentation site with smooth, **intuitive navigation**. This plugin allows users to easily move between pages using visible navigation buttons, customizable keyboard shortcuts, and **swipe gestures** on mobile devices.
+Enhance the reading experience on your Starlight documentation site with smooth, **intuitive navigation**. This plugin allows users to easily move between pages using visible navigation buttons, customizable keyboard shortcuts, **swipe gestures** on mobile devices, and smart scroll behavior that keeps the navigation accessible when needed.
 
 ## Prerequisites
 
@@ -67,5 +67,12 @@ import { Steps, Tabs, TabItem } from '@astrojs/starlight/components'
    ```
 
 3. [Start the development server](https://starlight.astro.build/getting-started/#start-the-development-server) to preview the plugin in action.
+
+   The plugin will automatically:
+   - Show navigation buttons when scrolling
+   - Keep buttons visible for 3 seconds after scrolling
+   - Hide buttons when not needed
+   - Support touch swipe gestures on mobile
+   - Enable keyboard shortcuts for navigation
 
 </Steps>

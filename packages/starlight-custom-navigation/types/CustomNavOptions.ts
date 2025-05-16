@@ -45,10 +45,10 @@ export interface CustomNavOptions {
         svgPath?: string;
         strokeWidth?: number;
     };
-    /**
-     * The radius of the navigation buttons when labels are hidden.
-     * @default 24px
-     */
-    buttonRadius?: number;
+    // Scroll behavior
+    scrollBehavior?: {
+        hideDelay?: number;
+        hideThreshold?: number;
+    };    
 }
 

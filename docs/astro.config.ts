@@ -30,6 +30,10 @@ export default defineConfig({
             svgPath: 'M16 4L8 12L16 20',
             strokeWidth: 3
           },
+          scrollBehavior: {
+            hideDelay: 3000,
+            hideThreshold: 300
+          }
         })],
       sidebar: [
         {

@@ -6,6 +6,7 @@ import type { CustomNavOptions } from './types/CustomNavOptions.js'
 
 export default function starlightCustomNavigationPlugin(
   userConfig: CustomNavOptions = {
+    //TODO: clean up and refactor the loading of the default options.
     linkLabels: {
       show: true,
       showOnHover: true,
@@ -19,6 +20,10 @@ export default function starlightCustomNavigationPlugin(
       svgPath: 'M4 16L12 8L20 16',
       strokeWidth: 2
     },        
+    scrollBehavior: {
+      hideDelay: 3000,
+      hideThreshold: 100
+    }
   }
 ): StarlightPlugin {
   return {

@@ -24,7 +24,10 @@ const svgIcon = config.svgIcon ?? {
   svgPath: "M4 16L12 8L20 16",
   strokeWidth: 2,
 };
-
+const scrollBehavior = config.scrollBehavior ?? {
+  hideDelay: 3000,
+  hideThreshold: 100,
+};  
 // Format shortcut for display
 const formatShortcut = (shortcut: { key: string; modifier: string }) => {
   if (!shortcut) return "";
@@ -103,7 +106,7 @@ const getButtonIcon = () => {
   }
 </div>
 
-<script define:vars={{ navShortcuts }}>
+<script define:vars={{ navShortcuts, scrollBehavior }}>
   // Add keyboard navigation
   document.addEventListener("keydown", (event) => {
     // Get the key that was pressed
@@ -209,7 +212,7 @@ const getButtonIcon = () => {
         }
 
         // Apply a resistance factor to make dragging feel natural
-        const resistance = 3;
+        const resistance = 6;
         initialOffset = diff / resistance;
 
         // Apply transform for visual feedback
@@ -228,6 +231,7 @@ const getButtonIcon = () => {
   // Show/hide navigation on scroll
   let lastScrollY = window.scrollY;
   let ticking = false;
+  let hideTimeout = null;
 
   const navControls = document.querySelector(".navigation-controls");
 
@@ -236,12 +240,22 @@ const getButtonIcon = () => {
 
     if (!ticking) {
       window.requestAnimationFrame(() => {
-        // Hide arrows when scrolling down, show when scrolling up
-        if (lastScrollY > 100) {
-          navControls?.classList.add("nav-hidden");
-        } else {
-          navControls?.classList.remove("nav-hidden");
+        // Show buttons when scrolling
+        navControls?.classList.remove("nav-hidden");
+
+        // Clear any existing timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
         }
+
+        // Set new timeout to hide navigation buttons after 3 seconds
+        // when scrolling down certain amount of pixels.
+        hideTimeout = window.setTimeout(() => {
+          if (lastScrollY > scrollBehavior.hideThreshold) {
+            navControls?.classList.add("nav-hidden");
+          }
+        }, scrollBehavior.hideDelay);
+
         ticking = false;
       });
 

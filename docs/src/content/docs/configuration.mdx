@@ -77,6 +77,21 @@ The Starlight custom navigation plugin **accepts an object** with the following 
 - **Default**: `2`
 - **Description**: The width of the stroke for the navigation button icons.
 
+### `scrollBehavior`
+- **Type**: `object`
+- **Default**: `{ hideDelay: 3000, hideThreshold: 100 }`
+- **Description**: Configure the scroll behavior of navigation buttons.
+
+#### `scrollBehavior.hideDelay`
+- **Type**: `number`
+- **Default**: `3000`
+- **Description**: Time in milliseconds before hiding the navigation buttons after scrolling stops.
+
+#### `scrollBehavior.hideThreshold`
+- **Type**: `number`
+- **Default**: `100`
+- **Description**: Scroll position in pixels at which the navigation buttons will be hidden after the delay.
+
 ## Example Configuration
 
 Here's a complete example showing all available options:
@@ -106,6 +121,11 @@ export default defineConfig({
           buttonIcon: {
             svgPath: 'M4 16L12 8L20 16',
             strokeWidth: 3
+          },
+          // Scroll behavior
+          scrollBehavior: {
+            hideDelay: 3000,
+            hideThreshold: 100
           }
         }),
       ],
@@ -123,5 +143,6 @@ The plugin includes built-in support for mobile devices:
 - Responsive button sizing
 - Automatic hiding of labels on small screens
 - Touch-friendly button placement
+- Smart scroll behavior with auto-hiding navigation
 
 
