@@ -1,5 +1,10 @@
 bck/
 
+packages/starlight-custom-navigation/components/front-end
+packages/starlight-custom-navigation/components/js-info
+
+.claude/
+
 # build output
 dist/
 # generated types

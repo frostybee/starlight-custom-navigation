@@ -38,7 +38,7 @@ export default function starlightCustomNavigationPlugin(
         }
 
         if (!starlightConfig.components?.PageFrame) {
-          updatedConfig.components.PageFrame = 'starlight-custom-navigation/overrides/PageFrame.astro'
+          updatedConfig.components.MarkdownContent = 'starlight-custom-navigation/overrides/PageFrame.astro'
         }
         // Pass the configuration to the integration
         addIntegration(starlightCustomNavigationIntegration(userConfig))
