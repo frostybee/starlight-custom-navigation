@@ -13,8 +13,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.34.3",
-    "astro": "^5.7.12",
+    "@astrojs/starlight": "^0.41.7",
+    "astro": "^7.2.4",
     "sharp": "^0.34.1",
     "starlight-custom-navigation": "workspace:*"
   },

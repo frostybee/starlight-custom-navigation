@@ -7,25 +7,10 @@ description: Configure the starlight-custom-navigation plugin.
 
 The Starlight custom navigation plugin **accepts an object** with the following **options**. You can customize these options to fit your needs. The default values are provided for each option.
 
-### `linkLabels`
-- **Type**: `object`
-- **Default**: `{ show: true, showOnHover: true, buttonRadiusNoLabel: 24 }`
-- **Description**: Controls the appearance and behavior of navigation button labels.
-
-#### `linkLabels.show`
+### `showTooltip`
 - **Type**: `boolean`
 - **Default**: `true`
-- **Description**: Whether to show labels on navigation buttons.
-
-#### `linkLabels.showOnHover`
-- **Type**: `boolean`
-- **Default**: `true`
-- **Description**: Whether to show labels in tooltips when hovering over buttons.
-
-#### `linkLabels.buttonRadiusNoLabel`
-- **Type**: `number`
-- **Default**: `24`
-- **Description**: Button radius in pixels when labels are hidden.
+- **Description**: Whether to show the custom tooltip (page title and keyboard shortcut) when hovering or focusing a navigation strip. When disabled, the browser's native `title` tooltip shows the page name instead.
 
 ### `navShortcuts`
 - **Type**: `object`
@@ -62,35 +47,20 @@ The Starlight custom navigation plugin **accepts an object** with the following 
 - **Default**: `'ctrl'`
 - **Description**: The modifier key to use with the shortcut.
 
-### `buttonIcon`
-- **Type**: `object`
-- **Default**: `{ svgPath: 'M4 16L12 8L20 16', strokeWidth: 2 }`
-- **Description**: Customize the SVG path and stroke width for navigation button icons.
-
-#### `buttonIcon.path`
-- **Type**: `string`
-- **Default**: `'M4 16L12 8L20 16'`
-- **Description**: The SVG path data for the navigation button icons.
-
-#### `buttonIcon.strokeWidth`
-- **Type**: `number`
-- **Default**: `2`
-- **Description**: The width of the stroke for the navigation button icons.
-
 ### `scrollBehavior`
 - **Type**: `object`
 - **Default**: `{ hideDelay: 3000, hideThreshold: 100 }`
-- **Description**: Configure the scroll behavior of navigation buttons.
+- **Description**: Auto-hide behavior of the compact floating buttons shown below 1280px.
 
 #### `scrollBehavior.hideDelay`
 - **Type**: `number`
 - **Default**: `3000`
-- **Description**: Time in milliseconds before hiding the navigation buttons after scrolling stops.
+- **Description**: Time in milliseconds of inactivity before the floating buttons fade out.
 
 #### `scrollBehavior.hideThreshold`
 - **Type**: `number`
 - **Default**: `100`
-- **Description**: Scroll position in pixels at which the navigation buttons will be hidden after the delay.
+- **Description**: Scroll distance in pixels required to bring hidden buttons back.
 
 ## Example Configuration
 
@@ -106,23 +76,14 @@ export default defineConfig({
     starlight({
       plugins: [
         starlightCustomNavigation({
-          // Link label configuration
-          linkLabels: {
-            show: true,
-            showOnHover: true,
-            buttonRadiusNoLabel: 24
-          },
+          // Show tooltip on hover/focus (default: true)
+          showTooltip: true,
           // Keyboard shortcuts
           navShortcuts: {
             previous: { key: 'ArrowLeft', modifier: 'ctrl' },
             next: { key: 'ArrowRight', modifier: 'ctrl' }
           },
-          // Custom button icon
-          buttonIcon: {
-            svgPath: 'M4 16L12 8L20 16',
-            strokeWidth: 3
-          },
-          // Scroll behavior
+          // Auto-hide of the compact floating buttons (below 1280px)
           scrollBehavior: {
             hideDelay: 3000,
             hideThreshold: 100

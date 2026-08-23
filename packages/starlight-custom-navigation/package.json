@@ -8,21 +8,22 @@
   "exports": {
     ".": "./index.ts",
     "./components/CustomPageNavigation.astro": "./components/CustomPageNavigation.astro",
-    "./overrides/PageFrame.astro": "./overrides/PageFrame.astro",
+    "./overrides/Pagination.astro": "./overrides/Pagination.astro",
     "./package.json": "./package.json"
   },
   "devDependencies": {
-    "@astrojs/starlight": "^0.34.3",
-    "astro": "^5.7.12"
+    "@astrojs/starlight": "^0.41.7",
+    "astro": "^7.2.4"
   },
   "peerDependencies": {
-    "@astrojs/starlight": ">=0.34"
+    "@astrojs/starlight": ">=0.41.0"
   },
   "engines": {
     "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "homepage": "https://github.com/frostybee/starlight-custom-navigation",
   "repository": {

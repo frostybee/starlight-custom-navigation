@@ -1,18 +1,39 @@
 {
   "name": "starlight-custom-navigation-monorepo",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "Enhance your documentation site with custom page navigation features, including support for keyboard shortcuts.",
   "author": "frostybee",
   "type": "module",
-  "engines": {
-    "node": "^18.17.1 || ^20.3.0 || >=21.0.0"
+  "scripts": {
+    "release": "changeset publish",
+    "version": "pnpm changeset version && pnpm i --no-frozen-lockfile",
+    "start:docs": "pnpm -F starlight-custom-navigation-docs dev",
+    "build:docs": "pnpm -F starlight-custom-navigation-docs build"
   },
-  "packageManager": "pnpm@9.6.0",  
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^3.0.1",
+    "@trivago/prettier-plugin-sort-imports": "5.2.2",
+    "eslint": "^9.32.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "packageManager": "pnpm@10.26.1",
+  "sideEffects": false,
   "homepage": "https://github.com/frostybee/starlight-custom-navigation",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frostybee/starlight-custom-navigation.git"
+    "url": "https://github.com/frostybee/starlight-custom-navigation.git",
+    "directory": "packages/starlight-custom-navigation"
   },
   "bugs": "https://github.com/frostybee/starlight-custom-navigation/issues"
 }

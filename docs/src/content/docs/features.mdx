@@ -3,74 +3,46 @@ title: Features
 description: Features of the starlight-custom-navigation plugin.
 ---
 
-## Features
+## Side Navigation Strips
 
-The starlight-custom-navigation plugin includes the following features:
+On wide screens (1280px and up), full-height vertical strips sit in the empty
+gutters beside the page content. A left-facing chevron navigates to the previous
+page, a right-facing one to the next. They sit between the sidebars and the
+content and never cover the prose or the table of contents.
 
-- Touch swipe gestures for navigation (swipe left/right)
-- Keyboard navigation shortcuts (Ctrl + Left/Right Arrow)
-- Customizable button labels and icons
-- Responsive design for mobile and desktop
-- Automatic hiding of labels on small screens
-- Touch-friendly button placement
-- Smart scroll behavior with auto-hiding navigation
+Hovering or keyboard-focusing a strip reveals a tooltip with the destination
+page title and the configured keyboard shortcut. Chevrons flip automatically in
+right-to-left (RTL) layouts.
+
+## Compact Floating Buttons
+
+Below 1280px, the strips become small circular buttons pinned mid-height at the
+viewport edges. They fade out after a period of inactivity and reappear when you
+scroll, keeping the screen uncluttered on smaller devices. The delay and scroll
+threshold are configurable via the `scrollBehavior` option. Tabbing to a hidden
+button brings the pair back.
 
 ## Touch Swipe Gestures
 
-Supports touch swipe gestures for navigation:
-
-- Swipe left to navigate to the previous page
-- Swipe right to navigate to the next page
-- Minimum swipe distance of 75 pixels to trigger navigation
+Swiping anywhere on the page navigates between pages, following the "turn the
+page" metaphor: swipe left for next, swipe right for previous. Swipes must
+travel at least 75 pixels and be more horizontal than vertical, so normal
+scrolling never triggers navigation. While dragging, the content shifts slightly
+in the swipe direction as visual feedback and springs back on release.
 
 ## Keyboard Navigation
 
-Supports keyboard shortcuts for navigation:
+Default shortcuts are `Ctrl + Left Arrow` (previous) and `Ctrl + Right Arrow`
+(next), customizable via the `navShortcuts` option. Shortcuts are suppressed
+while typing in a form field or while the search dialog is open.
 
-- Default: `Ctrl + Left Arrow` for previous page
-- Default: `Ctrl + Right Arrow` for next page
+## Accessibility
 
-You can customize these shortcuts using the `navShortcuts` configuration option.
-
-## Smart Scroll Behavior
-
-Includes intelligent scroll behavior:
-
-- Navigation buttons appear when scrolling
-- Buttons remain visible for 3 seconds after scrolling
-- Buttons automatically hide after 3 seconds if scrolled down
-- Buttons stay visible when near the top of the page
-- Smooth transitions for showing/hiding buttons
-
-## Customizable Button Labels and Icons
-
-Allows you to customize the button labels and icons:
-
-- Show/hide labels on buttons
-- Show labels in tooltips when hovering over buttons
-- Customize the button icon
-- Customize the button radius when labels are hidden
-
-## Responsive Design
-
-Designed to be responsive:
-
-- Labels and icons are automatically hidden on small screens
-- Buttons are placed in a touch-friendly manner for mobile devices
-- Optimized for both desktop and mobile viewing
-
-## Automatic Hiding of Labels
-
-Automatically hides labels on small screens to provide a better user experience:
-
-- Labels are hidden when the screen width is less than 768px
-- Tooltips show labels on hover when labels are hidden
-
-## Touch-Friendly Button Placement
-
-Places buttons in a touch-friendly manner for mobile devices:
-
-- Buttons are placed in the center of the screen
-- Optimized for easy thumb access
-- Responsive sizing for different screen sizes
-
+- Navigation links carry `rel="prev"` / `rel="next"` semantics and descriptive
+  `aria-label`s with `aria-keyshortcuts`
+- The visual tooltip is hidden from assistive technology to avoid double
+  announcements
+- Hover effects and tooltips also apply on keyboard focus (`:focus-visible`)
+- All animations are disabled when the user prefers reduced motion
+- Starlight's built-in previous/next pagination at the bottom of the page is
+  preserved as an always-visible fallback

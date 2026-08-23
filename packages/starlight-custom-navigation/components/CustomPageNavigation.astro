@@ -1,103 +1,142 @@
 ---
 import { config } from "virtual:custom-navigation-options";
-import MarkdownContent from "@astrojs/starlight/components/MarkdownContent.astro";
+import { DEFAULT_CONFIG } from "../types/CustomNavOptions.js";
 
 const { pagination } = Astro.locals.starlightRoute;
 const { prev, next } = pagination;
 
-//TODO: refactor the destructuring to use the config object directly.
-//TODO: Use Zod library to validate the config object.
-// Get configuration from virtual module
-const linkLabels = config.linkLabels ?? {
-  show: true,
-  showOnHover: true,
-  buttonRadiusWhenNoLabel: 24,
-};
-const showLabels = linkLabels.show;
-const showLabelsOnHover = linkLabels.showOnHover;
-let buttonRadius = linkLabels.buttonRadiusNoLabel ?? "24";
-buttonRadius = buttonRadius + "px";
-const navShortcuts = config.navShortcuts ?? {
-  previous: { key: "ArrowLeft", modifier: "ctrl" },
-  next: { key: "ArrowRight", modifier: "ctrl" },
-};
-const svgIcon = config.svgIcon ?? {
-  svgPath: "M4 16L12 8L20 16",
-  strokeWidth: 2,
-};
-const scrollBehavior = config.scrollBehavior ?? {
-  hideDelay: 3000,
-  hideThreshold: 100,
-};  
-// Format shortcut for display
-const formatShortcut = (shortcut: { key: string; modifier: string }) => {
+const showTooltip = config.showTooltip ?? DEFAULT_CONFIG.showTooltip;
+const navShortcuts = { ...DEFAULT_CONFIG.navShortcuts, ...config.navShortcuts };
+const scrollBehavior = { ...DEFAULT_CONFIG.scrollBehavior, ...config.scrollBehavior };
+
+// Format a shortcut as a compact chip label, e.g. "Ctrl + →".
+const formatShortcut = (shortcut?: { key: string; modifier: string }) => {
   if (!shortcut) return "";
   const modifier =
     shortcut.modifier.charAt(0).toUpperCase() + shortcut.modifier.slice(1);
   const key = shortcut.key.replace("Arrow", "");
-
-  // Replace ArrowRight/ArrowLeft with arrow symbols
   const displayKey = key === "Right" ? "→" : key === "Left" ? "←" : key;
-
   return `${modifier} + ${displayKey}`;
 };
 
-// Get the button icon for previous (left arrow)
-const getPrevButtonIcon = () => {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${svgIcon.strokeWidth}" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 18L9 12L15 6"></path>
-          </svg>`;
-};
+const prevShortcut = formatShortcut(navShortcuts.previous);
+const nextShortcut = formatShortcut(navShortcuts.next);
 
-// Get the button icon for next (right arrow)
-const getNextButtonIcon = () => {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${svgIcon.strokeWidth}" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18L15 12L9 6"></path>
-          </svg>`;
+// ARIA spec format, e.g. "Control+ArrowLeft".
+const ariaShortcut = (shortcut?: { key: string; modifier: string }) => {
+  if (!shortcut) return undefined;
+  const modifiers: Record<string, string> = {
+    ctrl: "Control",
+    alt: "Alt",
+    shift: "Shift",
+    meta: "Meta",
+  };
+  return `${modifiers[shortcut.modifier] ?? shortcut.modifier}+${shortcut.key}`;
 };
 ---
 
-<div class="custom-outer-wrapper">
-  <!-- Previous button at left end -->
-  {
-    prev && (
-      <a
-        href={prev.href}
-        rel="prev"
-        class="nav-button nav-button-prev"
-        id="prev-page-link"
-        title={`Previous: ${prev.label || "Previous Page"}`}
-        aria-label={`Previous: ${prev.label || "Previous Page"}`}
-      >
-        <Fragment set:html={getPrevButtonIcon()} />
-      </a>
-    )
-  }
-
-  <MarkdownContent>
-    <slot />    
-  </MarkdownContent>
-
-  <!-- Next button at right end -->
-  {
-    next && (
-      <a
-        href={next.href}
-        rel="next"
-        class="nav-button nav-button-next"
-        id="next-page-link"
-        title={`Next: ${next.label || "Next Page"}`}
-        aria-label={`Next: ${next.label || "Next Page"}`}
-      >
-        <Fragment set:html={getNextButtonIcon()} />
-      </a>
-    )
-  }
-</div>
+{
+  (prev || next) && (
+    <nav class="scn-side-nav" aria-label="Page navigation">
+      {prev && (
+        <a
+          href={prev.href}
+          rel="prev"
+          class="scn-side-nav-prev"
+          id="prev-page-link"
+          aria-label={`Previous: ${prev.label}`}
+          aria-keyshortcuts={ariaShortcut(navShortcuts.previous)}
+          title={!showTooltip ? prev.label : undefined}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+          {showTooltip && (
+            <span class="scn-side-nav-tooltip" aria-hidden="true">
+              <span class="scn-side-nav-tooltip-title">{prev.label}</span>
+              {prevShortcut && <kbd class="scn-side-nav-key">{prevShortcut}</kbd>}
+            </span>
+          )}
+        </a>
+      )}
+      {next && (
+        <a
+          href={next.href}
+          rel="next prefetch"
+          class="scn-side-nav-next"
+          id="next-page-link"
+          aria-label={`Next: ${next.label}`}
+          aria-keyshortcuts={ariaShortcut(navShortcuts.next)}
+          title={!showTooltip ? next.label : undefined}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+          {showTooltip && (
+            <span class="scn-side-nav-tooltip" aria-hidden="true">
+              <span class="scn-side-nav-tooltip-title">{next.label}</span>
+              {nextShortcut && <kbd class="scn-side-nav-key">{nextShortcut}</kbd>}
+            </span>
+          )}
+        </a>
+      )}
+    </nav>
+  )
+}
 
 <script define:vars={{ navShortcuts, scrollBehavior }}>
+  // Starlight's .main-pane creates an isolated stacking context, so the fixed
+  // strips must live directly under <body> to sit above the sidebar panes.
+  const sideNav = document.querySelector(".scn-side-nav");
+  if (sideNav) document.body.appendChild(sideNav);
+
+  // Measure the table of contents pane so the next strip sits in the gutter
+  // beside the content (the pane grows with the viewport and Starlight
+  // exposes no CSS variable for it).
+  const updatePaneOffsets = () => {
+    const toc = document.querySelector(".right-sidebar-container");
+    const width =
+      toc && getComputedStyle(toc).display !== "none" ? toc.offsetWidth : 0;
+    document.documentElement.style.setProperty("--scn-toc-width", width + "px");
+  };
+  window.addEventListener("resize", updatePaneOffsets, { passive: true });
+  updatePaneOffsets();
+
+  // True while the user is typing in a form field or editable region.
+  const fieldHasFocus = (event) => {
+    const target = event.composedPath()[0] || event.target;
+    if (/^(?:input|select|textarea)$/i.test(target?.nodeName ?? "")) return true;
+    return !!target?.isContentEditable;
+  };
+
   // Add keyboard navigation
   document.addEventListener("keydown", (event) => {
+    // Don't navigate away under the search dialog or while typing.
+    if (document.querySelector("dialog[open]")) return;
+    if (fieldHasFocus(event)) return;
+
     // Get the key that was pressed
     const key = event.key.toLowerCase();
 
@@ -116,6 +155,79 @@ const getNextButtonIcon = () => {
       if (nextLink) nextLink.click();
     }
   });
+
+  // Auto-hide the compact floating buttons after inactivity; a scroll of
+  // hideThreshold pixels brings them back. Desktop strips stay put.
+  const setupAutoHide = (nav) => {
+    const mq = window.matchMedia("(max-width: 1279px)");
+    let timer = null;
+    let lastY = window.scrollY;
+    let traveled = 0;
+    let ticking = false;
+
+    const hide = () => {
+      if (!mq.matches) return;
+      // A page too short to scroll could never reveal the buttons again.
+      if (
+        document.documentElement.scrollHeight - window.innerHeight <=
+        scrollBehavior.hideThreshold
+      )
+        return;
+      // Don't pull them out from under the pointer or keyboard focus.
+      if (nav.matches(":hover") || nav.contains(document.activeElement)) {
+        arm();
+        return;
+      }
+      nav.classList.add("scn-side-nav-hidden");
+      traveled = 0;
+    };
+
+    const arm = () => {
+      clearTimeout(timer);
+      timer = setTimeout(hide, scrollBehavior.hideDelay);
+    };
+
+    const show = () => {
+      nav.classList.remove("scn-side-nav-hidden");
+      arm();
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          const y = window.scrollY;
+          const delta = Math.abs(y - lastY);
+          lastY = y;
+          if (!mq.matches) return;
+          if (nav.classList.contains("scn-side-nav-hidden")) {
+            traveled += delta;
+            if (traveled >= scrollBehavior.hideThreshold) show();
+          } else {
+            arm();
+          }
+        });
+      },
+      { passive: true }
+    );
+
+    // Tabbing to a hidden button brings the pair back.
+    nav.addEventListener("focusin", show);
+    // Leaving after a hover restarts the countdown the hover was blocking.
+    nav.addEventListener("mouseleave", arm);
+
+    // Crossing up into the strip band while hidden must restore the strips.
+    mq.addEventListener("change", (e) => {
+      if (!e.matches) show();
+    });
+
+    // Don't auto-hide on initial load — start the countdown only after the
+    // first scroll so the buttons are visible when the user arrives.
+  };
+  if (sideNav) setupAutoHide(sideNav);
 
   // Enable swipe navigation on mobile devices.
   const enableSwipeNavigation = () => {
@@ -216,109 +328,246 @@ const getNextButtonIcon = () => {
     }
   };
   enableSwipeNavigation();
-
 </script>
 
-<style>
+<style is:global>
   @layer starlight-custom-navigation {
-    .custom-outer-wrapper {
-      background-color: #f7fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    :root {
+      --scn-side-nav-width: 3.5rem;
+      --scn-side-nav-icon: 1.75rem;
     }
 
-    .custom-outer-wrapper > p {
-      text-align: center;
-      font-style: italic;
-      color: #4a5568;
-      margin-block: 1rem;
+    @media (min-width: 1440px) {
+      :root {
+        --scn-side-nav-width: 4.5rem;
+        --scn-side-nav-icon: 2rem;
+      }
     }
 
-    /* Navigation buttons - fixed position */
-    .nav-button {
+    @media (min-width: 1600px) {
+      :root {
+        --scn-side-nav-width: 5.625rem;
+        --scn-side-nav-icon: 2.5rem;
+      }
+    }
+
+    /* Reserve gutter space beside the content so the strips sit in empty
+       space instead of covering prose or the table of contents. */
+    @media (min-width: 1280px) {
+      body:has(.scn-side-nav) .main-pane {
+        padding-inline: var(--scn-side-nav-width);
+      }
+    }
+
+    /* ── Desktop strips (≥1280px) ── */
+
+    .scn-side-nav-prev,
+    .scn-side-nav-next {
+      position: fixed;
+      top: var(--sl-nav-height, 3.5rem);
+      bottom: 0;
+      width: var(--scn-side-nav-width);
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: var(--sl-color-accent, #3b82f6);
-      color: white;
+      color: var(--sl-color-gray-3);
       text-decoration: none;
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      flex-shrink: 0;
-      position: fixed;
+      z-index: 10;
+      cursor: pointer;
+      transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    .scn-side-nav-prev:hover,
+    .scn-side-nav-next:hover {
+      color: var(--sl-color-white);
+      background-color: var(--sl-color-gray-6);
+      text-decoration: none;
+    }
+
+    .scn-side-nav-prev:focus-visible,
+    .scn-side-nav-next:focus-visible {
+      outline: 2px solid var(--sl-color-accent);
+      outline-offset: -4px;
+      color: var(--sl-color-white);
+    }
+
+    .scn-side-nav-prev {
+      inset-inline-start: 0;
+    }
+
+    .scn-side-nav-next {
+      inset-inline-end: 0;
+    }
+
+    /* Clear the fixed sidebar and table of contents panes. Starlight exposes
+       the content's start offset as --sl-content-inline-start; the right pane
+       has no equivalent variable and grows on wide viewports, so its width is
+       measured at runtime. */
+    @media (min-width: 1280px) {
+      .scn-side-nav-prev {
+        inset-inline-start: var(--sl-content-inline-start, 0);
+      }
+
+      .scn-side-nav-next {
+        inset-inline-end: var(--scn-toc-width, 0px);
+      }
+    }
+
+    .scn-side-nav-prev svg,
+    .scn-side-nav-next svg {
+      width: var(--scn-side-nav-icon);
+      height: var(--scn-side-nav-icon);
+    }
+
+    /* ── Hover tooltip ── */
+
+    .scn-side-nav-tooltip {
+      position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--sl-color-gray-7, #1a1a2e);
+      border: 1px solid var(--sl-color-gray-6);
+      border-radius: 0.5rem;
+      box-shadow: var(--sl-shadow-lg);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
     }
 
-    .nav-button:hover {
-      background-color: var(--sl-color-accent-high, #2563eb);
-      transform: translateY(-50%) scale(1.05);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    .scn-side-nav-prev .scn-side-nav-tooltip {
+      inset-inline-start: calc(100% + 0.5rem);
     }
 
-    .nav-button-prev {
-      left: 24px;
+    .scn-side-nav-next .scn-side-nav-tooltip {
+      inset-inline-end: calc(100% + 0.5rem);
     }
 
-    .nav-button-next {
-      right: 24px;
+    /* The strip is a huge hover target, so delay the reveal to avoid flicker
+       on incidental mouse passes. Hiding is immediate: no delay on the base. */
+    .scn-side-nav-prev:hover .scn-side-nav-tooltip,
+    .scn-side-nav-next:hover .scn-side-nav-tooltip,
+    .scn-side-nav-prev:focus-visible .scn-side-nav-tooltip,
+    .scn-side-nav-next:focus-visible .scn-side-nav-tooltip {
+      opacity: 1;
+      transition-delay: 150ms;
     }
 
-    /* Content takes up available space */
-    .custom-outer-wrapper > :not(.nav-button) {
-      flex: 1;
+    .scn-side-nav-tooltip-title {
+      font-size: var(--sl-text-sm);
+      font-weight: 600;
+      color: var(--sl-color-white);
+      max-width: 16rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* SVG icon styling */
-    .nav-button svg {
-      width: 24px;
-      height: 24px;
+    .scn-side-nav-key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.5rem;
+      height: 1.5rem;
+      padding: 0 0.375rem;
+      background: var(--sl-color-gray-6);
+      border: 1px solid var(--sl-color-gray-5);
+      border-radius: 0.25rem;
+      font-size: var(--sl-text-xs);
+      font-weight: 600;
+      color: var(--sl-color-white);
+      line-height: 1;
+      white-space: nowrap;
     }
 
-    /* Hide on print */
-    @media print {
-      .nav-button {
+    [dir="rtl"] .scn-side-nav-prev svg,
+    [dir="rtl"] .scn-side-nav-next svg {
+      transform: scaleX(-1);
+    }
+
+    /* ── Auto-hide (compact mode) ── */
+
+    .scn-side-nav-hidden .scn-side-nav-prev,
+    .scn-side-nav-hidden .scn-side-nav-next {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ── Compact floating buttons (below 1280px) ── */
+
+    @media (max-width: 1279px) {
+      /* Tooltips are desktop-only: a tap leaves the anchor in a sticky
+         :hover state, pinning the tooltip open over the content. */
+      .scn-side-nav-tooltip {
         display: none;
       }
+
+      .scn-side-nav-prev,
+      .scn-side-nav-next {
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 9999px;
+        background: var(--sl-color-accent);
+        border: 1px solid var(--sl-color-accent);
+        box-shadow: var(--sl-shadow-md);
+        color: #ffffff;
+      }
+
+      .scn-side-nav-prev {
+        inset-inline-start: 0.75rem;
+      }
+
+      .scn-side-nav-next {
+        inset-inline-end: 0.75rem;
+      }
+
+      .scn-side-nav-prev svg,
+      .scn-side-nav-next svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .scn-side-nav-prev:hover,
+      .scn-side-nav-next:hover {
+        background: var(--sl-color-accent-high);
+        color: #ffffff;
+      }
     }
 
-    /* Mobile responsiveness */
-    @media (max-width: 768px) {
-      .custom-outer-wrapper {
-        flex-direction: column;
-        gap: 1rem;
+    /* When the sidebar is visible in the compact band, push the prev button
+       past it (below 1024px the sidebar is an off-canvas drawer). */
+    @media (min-width: 50rem) and (max-width: 1279px) {
+      .scn-side-nav-prev {
+        inset-inline-start: calc(var(--sl-content-inline-start, 0px) + 0.75rem);
       }
-      
-      .nav-button {
-        width: 45px;
-        height: 45px;
-        align-self: center;
-        order: unset;
-        margin: 0;
+    }
+
+    /* ── Reduced motion ── */
+
+    @media (prefers-reduced-motion: reduce) {
+      .scn-side-nav-prev,
+      .scn-side-nav-next,
+      .scn-side-nav-tooltip {
+        transition: none;
       }
-      
-      .nav-button-prev {
-        order: -1;
-      }
-      
-      .nav-button-next {
-        order: 1;
-        margin-left: 0;
-      }
-      
-      .nav-button svg {
-        width: 20px;
-        height: 20px;
+    }
+
+    /* ── Print ── */
+
+    @media print {
+      .scn-side-nav-prev,
+      .scn-side-nav-next {
+        display: none !important;
       }
     }
   }
