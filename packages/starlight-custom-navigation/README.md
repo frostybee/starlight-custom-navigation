@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/frostybee/starlight-custom-navigation/main/docs/public/images/navigation-sailing.svg" alt="Custom Navigation" width="100" height="100">
+</p>
+
 <h1 align="center">Custom Navigation</h1>
 
 <p align="center">
