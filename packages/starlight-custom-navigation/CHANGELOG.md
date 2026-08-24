@@ -1,5 +1,15 @@
 # starlight-custom-navigation
 
+## 1.0.1
+
+### Patch Changes
+
+- [`9a5e7ab`](https://github.com/frostybee/starlight-custom-navigation/commit/9a5e7abd1bbc0fc4d91ff9363e796fa7340e5880) Thanks [@frostybee](https://github.com/frostybee)! - Fix keyboard shortcuts on macOS by using Cmd instead of Ctrl
+
+  On macOS, Ctrl+Arrow is captured by the system for Mission Control and never
+  reaches the browser. The shortcut handler now detects macOS at runtime and checks
+  Cmd (metaKey) instead of Ctrl. The tooltip chip updates to show "Cmd + →" on Mac and "Ctrl + →" elsewhere. No config change required.
+
 ## 1.0.0
 
 ### Major Changes

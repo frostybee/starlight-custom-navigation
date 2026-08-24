@@ -1,6 +1,6 @@
 {
   "name": "starlight-custom-navigation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "Add side navigation strips, floating buttons, keyboard shortcuts, and swipe gestures for moving between pages.",
   "author": "frostybee",
