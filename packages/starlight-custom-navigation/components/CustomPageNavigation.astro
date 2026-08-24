@@ -10,17 +10,20 @@ const navShortcuts = { ...DEFAULT_CONFIG.navShortcuts, ...config.navShortcuts };
 const scrollBehavior = { ...DEFAULT_CONFIG.scrollBehavior, ...config.scrollBehavior };
 
 // Format a shortcut as a compact chip label, e.g. "Ctrl + →".
-const formatShortcut = (shortcut?: { key: string; modifier: string }) => {
+const formatShortcut = (shortcut?: { key: string; modifier: string }, platform?: "win" | "mac") => {
   if (!shortcut) return "";
-  const modifier =
-    shortcut.modifier.charAt(0).toUpperCase() + shortcut.modifier.slice(1);
+  let modifier = shortcut.modifier.charAt(0).toUpperCase() + shortcut.modifier.slice(1);
+  if (platform === "mac" && shortcut.modifier === "ctrl") modifier = "Cmd";
   const key = shortcut.key.replace("Arrow", "");
   const displayKey = key === "Right" ? "→" : key === "Left" ? "←" : key;
   return `${modifier} + ${displayKey}`;
 };
 
-const prevShortcut = formatShortcut(navShortcuts.previous);
-const nextShortcut = formatShortcut(navShortcuts.next);
+const prevShortcutWin = formatShortcut(navShortcuts.previous, "win");
+const prevShortcutMac = formatShortcut(navShortcuts.previous, "mac");
+const nextShortcutWin = formatShortcut(navShortcuts.next, "win");
+const nextShortcutMac = formatShortcut(navShortcuts.next, "mac");
+const hasPlatformSplit = prevShortcutWin !== prevShortcutMac || nextShortcutWin !== nextShortcutMac;
 
 // ARIA spec format, e.g. "Control+ArrowLeft".
 const ariaShortcut = (shortcut?: { key: string; modifier: string }) => {
@@ -65,7 +68,14 @@ const ariaShortcut = (shortcut?: { key: string; modifier: string }) => {
           {showTooltip && (
             <span class="scn-side-nav-tooltip" aria-hidden="true">
               <span class="scn-side-nav-tooltip-title">{prev.label}</span>
-              {prevShortcut && <kbd class="scn-side-nav-key">{prevShortcut}</kbd>}
+              {hasPlatformSplit ? (
+                <>
+                  <kbd class="scn-side-nav-key scn-shortcut-win">{prevShortcutWin}</kbd>
+                  <kbd class="scn-side-nav-key scn-shortcut-mac">{prevShortcutMac}</kbd>
+                </>
+              ) : (
+                prevShortcutWin && <kbd class="scn-side-nav-key">{prevShortcutWin}</kbd>
+              )}
             </span>
           )}
         </a>
@@ -97,7 +107,14 @@ const ariaShortcut = (shortcut?: { key: string; modifier: string }) => {
           {showTooltip && (
             <span class="scn-side-nav-tooltip" aria-hidden="true">
               <span class="scn-side-nav-tooltip-title">{next.label}</span>
-              {nextShortcut && <kbd class="scn-side-nav-key">{nextShortcut}</kbd>}
+              {hasPlatformSplit ? (
+                <>
+                  <kbd class="scn-side-nav-key scn-shortcut-win">{nextShortcutWin}</kbd>
+                  <kbd class="scn-side-nav-key scn-shortcut-mac">{nextShortcutMac}</kbd>
+                </>
+              ) : (
+                nextShortcutWin && <kbd class="scn-side-nav-key">{nextShortcutWin}</kbd>
+              )}
             </span>
           )}
         </a>
@@ -124,6 +141,16 @@ const ariaShortcut = (shortcut?: { key: string; modifier: string }) => {
   window.addEventListener("resize", updatePaneOffsets, { passive: true });
   updatePaneOffsets();
 
+  // Platform detection: on macOS, Ctrl+Arrow is captured by the system for
+  // Mission Control, so we use Cmd (metaKey) instead.
+  const isMac = /Mac|iPhone|iPod|iPad/.test(navigator.platform);
+
+  // Show the correct shortcut chip in tooltips (both are rendered, one hidden).
+  if (isMac) {
+    document.querySelectorAll(".scn-shortcut-win").forEach(el => el.style.display = "none");
+    document.querySelectorAll(".scn-shortcut-mac").forEach(el => el.style.display = "");
+  }
+
   // True while the user is typing in a form field or editable region.
   const fieldHasFocus = (event) => {
     const target = event.composedPath()[0] || event.target;
@@ -140,11 +167,14 @@ const ariaShortcut = (shortcut?: { key: string; modifier: string }) => {
     // Get the key that was pressed
     const key = event.key.toLowerCase();
 
-    // Check if the pressed key matches our configured shortcuts
+    // Check if the pressed key matches our configured shortcuts.
+    // On macOS, "ctrl" maps to Cmd (metaKey) since Ctrl+Arrow is system-reserved.
     const checkShortcut = (shortcut) => {
       if (!shortcut) return false;
-      const modifierKey = `${shortcut.modifier}Key`;
-      return key === shortcut.key.toLowerCase() && event[modifierKey];
+      const modifier = shortcut.modifier;
+      const modifierPressed =
+        modifier === "ctrl" ? (isMac ? event.metaKey : event.ctrlKey) : event[`${modifier}Key`];
+      return key === shortcut.key.toLowerCase() && modifierPressed;
     };
 
     if (checkShortcut(navShortcuts.previous)) {
@@ -485,6 +515,12 @@ const ariaShortcut = (shortcut?: { key: string; modifier: string }) => {
       color: var(--sl-color-white);
       line-height: 1;
       white-space: nowrap;
+    }
+
+    /* Server renders both platform variants; JS hides the wrong one.
+       Default to showing the Windows/Linux chip until JS runs. */
+    .scn-shortcut-mac {
+      display: none;
     }
 
     [dir="rtl"] .scn-side-nav-prev svg,
