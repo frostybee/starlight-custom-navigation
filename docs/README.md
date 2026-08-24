@@ -1,6 +1,6 @@
 # `starlight-custom-navigation`
 
-Enhance your documentation site with custom page navigation features, including support for keyboard shortcuts.
+Add side navigation strips, floating buttons, keyboard shortcuts, and swipe gestures for moving between pages.
 
 ## Documentation
 

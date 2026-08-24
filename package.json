@@ -2,7 +2,7 @@
   "name": "starlight-custom-navigation-monorepo",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "Enhance your documentation site with custom page navigation features, including support for keyboard shortcuts.",
+  "description": "Add side navigation strips, floating buttons, keyboard shortcuts, and swipe gestures for moving between pages.",
   "author": "frostybee",
   "type": "module",
   "scripts": {
